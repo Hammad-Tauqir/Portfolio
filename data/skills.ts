@@ -1,0 +1,55 @@
+export const skills = [
+  {
+    name: "Frontend",
+    label: "01 / INTERFACE",
+    icon: "frontend",
+    items: [
+      "Next.js",
+      "React.js",
+      "TypeScript",
+      "JavaScript",
+      "Tailwind CSS",
+      "HTML",
+      "CSS",
+    ],
+  },
+  {
+    name: "Backend",
+    label: "02 / LOGIC",
+    icon: "backend",
+    items: [
+      "Node.js",
+      "Express.js",
+      "Django",
+      "Django REST Framework",
+      "REST APIs",
+      "JWT Authentication",
+    ],
+  },
+  {
+    name: "Databases",
+    label: "03 / DATA",
+    icon: "database",
+    items: ["PostgreSQL", "MySQL", "Firebase", "Prisma ORM"],
+  },
+  {
+    name: "Automation",
+    label: "04 / SYSTEMS",
+    icon: "automation",
+    items: [
+      "n8n",
+      "AI workflow automation",
+      "AI agents",
+      "Email automation",
+      "Google Sheets automation",
+      "Webhooks",
+      "OpenAI API",
+    ],
+  },
+  {
+    name: "Tools & deployment",
+    label: "05 / WORKFLOW",
+    icon: "tools",
+    items: ["Git", "GitHub", "Postman", "Vercel", "Railway", "VS Code"],
+  },
+] as const;

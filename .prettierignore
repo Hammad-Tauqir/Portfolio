@@ -1,0 +1,9 @@
+node_modules
+.next
+out
+package-lock.json
+next-env.d.ts
+Portfolio-Design-Files
+test-results
+playwright-report
+.npm-cache
