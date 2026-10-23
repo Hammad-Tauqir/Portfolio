@@ -1,30 +1,27 @@
 import type { Metadata } from "next";
 import { site } from "@/config/site";
 import { ContactContent } from "@/components/contact-content";
+
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Discuss full-stack development opportunities, web products and AI automation with Hammad Tauqir in Lahore, Pakistan.",
-  openGraph: {
-    title: "Contact | Hammad Tauqir",
-    description:
-      "Start a conversation about your next web product or workflow.",
-  },
+    "Discuss a web application, business integration, or AI automation with Hammad Tauqir.",
   ...(site.url ? { alternates: { canonical: `${site.url}/contact` } } : {}),
 };
+
 export default function ContactPage() {
   return (
     <main id="main-content">
       <section className="wrap page-head">
         <span className="eyebrow">CONTACT / START A CONVERSATION</span>
         <h1>
-          Let&apos;s make
+          Let’s build something
           <br />
-          something <span className="accent">useful.</span>
+          <span className="accent">genuinely useful.</span>
         </h1>
         <p>
-          Interested in a full-stack role, a web product, or an automation idea?
-          Let&apos;s talk about what you have in mind.
+          Share the website, tool, or workflow you have in mind. A little
+          context about the problem is the best place to start.
         </p>
       </section>
       <section className="wrap" aria-label="Contact information and form">

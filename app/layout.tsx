@@ -6,19 +6,19 @@ import "@fontsource/space-grotesk/700.css";
 import "@fontsource/dm-mono/400.css";
 import "@fontsource/dm-mono/500.css";
 import "./globals.css";
-import "./enhancements.css";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { site } from "@/config/site";
+
 export const metadata: Metadata = {
   metadataBase: new URL(site.url || "http://localhost:3000"),
   title: {
-    default: `${site.name} — Full-Stack Developer`,
+    default: `${site.name} — Full-Stack Developer & AI Automation Builder`,
     template: `%s | ${site.name}`,
   },
   description: site.intro,
   openGraph: {
-    title: `${site.name} — Full-Stack Developer`,
+    title: `${site.name} — Full-Stack Developer & AI Automation Builder`,
     description: site.intro,
     type: "website",
     locale: "en_US",
@@ -26,34 +26,24 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — Full-Stack Developer`,
+    title: `${site.name} — Full-Stack Developer & AI Automation Builder`,
     description: site.intro,
   },
   icons: { icon: "/favicon.svg" },
 };
+
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  colorScheme: "dark light",
-  themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#0b1016" },
-    { media: "(prefers-color-scheme: light)", color: "#f5f5ee" },
-  ],
+  colorScheme: "light",
+  themeColor: "#f4f1e9",
 };
-const themeScript = `try{document.documentElement.dataset.theme=localStorage.getItem('portfolio-theme')==='light'?'light':'dark'}catch{document.documentElement.dataset.theme='dark'}`;
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      data-theme="dark"
-      data-scroll-behavior="smooth"
-      suppressHydrationWarning
-    >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-      </head>
+    <html lang="en" data-scroll-behavior="smooth">
       <body>
         <a className="skip-link" href="#main-content">
           Skip to content

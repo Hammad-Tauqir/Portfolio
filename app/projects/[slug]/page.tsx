@@ -6,6 +6,7 @@ import { projects } from "@/data/projects";
 import { site } from "@/config/site";
 import { ProjectVisual } from "@/components/visuals";
 import { ProjectLinks } from "@/components/project-card";
+
 type Props = { params: Promise<{ slug: string }> };
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
@@ -17,15 +18,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: project.name,
     description: project.summary,
-    openGraph: {
-      title: `${project.name} | ${site.name}`,
-      description: project.summary,
-    },
     ...(site.url
       ? { alternates: { canonical: `${site.url}/projects/${slug}` } }
       : {}),
   };
 }
+
 export default async function ProjectPage({ params }: Props) {
   const { slug } = await params;
   const index = projects.findIndex((project) => project.slug === slug);
@@ -43,7 +41,7 @@ export default async function ProjectPage({ params }: Props) {
           <div className="eyebrow case-eyebrow">
             {String(index + 1).padStart(2, "0")} /{" "}
             {project.categories.join(" + ")} ·{" "}
-            {project.status === "In Progress" ? "In Progress" : project.context}
+            {project.status === "In Progress" ? "In progress" : project.context}
           </div>
           <h1>
             {project.name}
@@ -58,6 +56,13 @@ export default async function ProjectPage({ params }: Props) {
           <div className="project-links">
             <ProjectLinks project={project} />
           </div>
+          {project.slug === "ai-receptionist" && (
+            <p className="access-note">
+              <strong>Approved access required.</strong> This is a website
+              assistant with voice input and reply read-aloud—not a telephone
+              calling service.
+            </p>
+          )}
         </div>
         <ProjectVisual project={project} priority />
       </section>
@@ -83,16 +88,12 @@ export default async function ProjectPage({ params }: Props) {
       <section className="wrap case-body">
         <div>
           <span className="eyebrow">PROJECT BREAKDOWN</span>
-          <h2>
-            The story
-            <br />
-            behind the build.
-          </h2>
+          <h2>The thinking behind the build.</h2>
         </div>
         <div>
-          <h3>The challenge</h3>
+          <h3>The problem</h3>
           <p>{project.problem}</p>
-          <h3>The approach</h3>
+          <h3>What I implemented</h3>
           <p>{project.solution}</p>
           <h3>
             {project.status === "In Progress"
@@ -104,17 +105,17 @@ export default async function ProjectPage({ params }: Props) {
               <li key={feature}>{feature}</li>
             ))}
           </ul>
-          <h3>Implementation challenges</h3>
+          <h3>Implementation notes</h3>
           <p>
             {project.challenges ||
-              "A detailed account of the implementation challenges will be added with the project write-up."}
+              "Detailed implementation notes will be added with the project write-up."}
           </p>
           <h3>What I learned</h3>
           <p>
             {project.learned ||
-              "Personal reflections and lessons will be added with the project write-up."}
+              "Personal reflections will be added with the complete project write-up."}
           </p>
-          <h3>Screenshots</h3>
+          <h3>Project visuals</h3>
           {project.screenshots.length ? (
             <div className="screenshots">
               {project.screenshots.map((screenshot) => (
@@ -129,21 +130,14 @@ export default async function ProjectPage({ params }: Props) {
               ))}
             </div>
           ) : (
-            <div className="screenshot-placeholder">
-              <Image
-                src="/images/projects/screenshot-placeholder.svg"
-                width={720}
-                height={360}
-                alt="Project screenshot placeholder: real screenshots to be added"
-              />
-            </div>
+            <ProjectVisual project={project} />
           )}
           <p className="placeholder-note">
             {!project.image &&
-              "The project graphic is an illustration, not an actual product screenshot. "}
+              "The interface shown is an illustrative preview based on confirmed project features, not a real product screenshot. "}
             {project.privateRepo &&
               "The professional project repository is private. "}
-            {!project.demo && "A live demo link has not been provided."}
+            {!project.demo && "A verified live demo URL has not been provided."}
           </p>
           <Link className="btn secondary" href="/projects">
             ← More projects

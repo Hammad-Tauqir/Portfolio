@@ -1,44 +1,20 @@
 export const services = [
   {
-    title: "Full-Stack Web Development",
+    title: "Full-Stack Websites & Applications",
     description:
-      "Connected interfaces, APIs and data for practical web applications.",
+      "Responsive websites and practical applications with the interface, backend, and data working as one product.",
     icon: "frontend",
   },
   {
-    title: "Next.js Website Development",
+    title: "AI Assistants & n8n Automations",
     description:
-      "Responsive websites built around clear content and thoughtful interactions.",
-    icon: "frontend",
+      "Focused assistants and workflows that handle repeat tasks while keeping important decisions visible and reviewable.",
+    icon: "automation",
   },
   {
-    title: "Backend & REST API Development",
+    title: "APIs & Business Integrations",
     description:
-      "Structured APIs, authentication and relational data for your application.",
+      "Connections between your website, CRM, calendars, spreadsheets, email, and the tools your team already uses.",
     icon: "backend",
-  },
-  {
-    title: "API & CRM Integration",
-    description:
-      "Connect marketing tools, customer records and appointment-booking workflows.",
-    icon: "tools",
-  },
-  {
-    title: "n8n Workflow Automation",
-    description:
-      "Build focused workflows that connect tools and reduce repetitive steps.",
-    icon: "automation",
-  },
-  {
-    title: "AI Assistants & Chatbots",
-    description:
-      "Explore scoped AI assistants with clear tasks and human oversight.",
-    icon: "automation",
-  },
-  {
-    title: "Google Sheets & Business Automation",
-    description:
-      "Capture, organize and update business information across connected tools.",
-    icon: "database",
   },
 ] as const;

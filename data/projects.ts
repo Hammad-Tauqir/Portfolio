@@ -19,7 +19,13 @@ export type Project = {
   problem: string;
   solution: string;
   features: string[];
-  visual: "devlog" | "polymath" | "metaviz" | "banking" | "automation";
+  visual:
+    | "receptionist"
+    | "devlog"
+    | "polymath"
+    | "metaviz"
+    | "banking"
+    | "automation";
   image: string;
   screenshots: { src: string; alt: string }[];
   demo: string;
@@ -41,6 +47,35 @@ const defaults = {
   learned: "",
 };
 export const projects: Project[] = [
+  {
+    ...defaults,
+    slug: "ai-receptionist",
+    name: "AI Receptionist",
+    categories: ["AI Automation"],
+    context: "Invite-only portfolio demo",
+    featured: true,
+    summary:
+      "A website assistant that answers service questions, captures leads, and manages appointments across Google Calendar and Sheets.",
+    stack: ["n8n", "Google Calendar", "Google Sheets", "Email", "Web Voice"],
+    problem:
+      "Service businesses lose time answering repeat questions and moving booking details between disconnected tools.",
+    solution:
+      "An invite-only website demo that connects guided conversations with lead capture, calendar availability, booking notifications, and verified booking changes.",
+    features: [
+      "Business services and FAQ answers",
+      "Lead capture into Google Sheets",
+      "Google Calendar availability checks and appointment booking",
+      "Booking notification emails",
+      "Email-code verification for rescheduling and cancellation",
+      "Website voice input and reply read-aloud",
+      "Invite-only access",
+    ],
+    visual: "receptionist",
+    challenges:
+      "The workflow coordinates several business tools while keeping booking changes protected by email-code verification.",
+    learned:
+      "A useful assistant needs clear boundaries, transparent access rules, and dependable hand-offs between conversation and business systems.",
+  },
   {
     ...defaults,
     slug: "devlog",
@@ -126,7 +161,7 @@ export const projects: Project[] = [
     name: "Banking Management App",
     categories: ["Mobile"],
     context: "Android application",
-    featured: true,
+    featured: false,
     summary:
       "An Android application for user account management and transaction workflows.",
     stack: ["Java", "XML", "Android Studio", "Firebase"],

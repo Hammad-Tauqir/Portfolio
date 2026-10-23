@@ -5,9 +5,9 @@ export const site = {
   location: "Lahore, Pakistan",
   availability: "Open to Opportunities",
   intro:
-    "I build responsive full-stack web applications and intelligent business automation workflows using Next.js, Node.js, PostgreSQL, Prisma and n8n.",
+    "Full-stack developer building polished websites, practical applications, and AI automations with Next.js, Node.js, and n8n.",
   heroIntro:
-    "I'm Hammad, a full-stack developer shaping practical web products and exploring AI-powered automation. From first interaction to working backend, I care about the entire experience.",
+    "I’m Hammad, a full-stack developer in Lahore. I design and build clear web experiences, connected business tools, and practical n8n workflows—from the first screen to the systems behind it.",
   about: [
     "I'm a Computer Science graduate from FAST-NUCES with hands-on experience building full-stack applications. At MetaViz Studio, I worked on responsive Next.js experiences and connected marketing tools with booking and lead workflows.",
     "I work with Next.js, React, Node.js, Django, Prisma and relational databases. My interests now also include AI automation: finding repetitive business tasks and turning them into clear, reviewable workflows with n8n. I am interested in full-stack, backend and AI automation opportunities.",

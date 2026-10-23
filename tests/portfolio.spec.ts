@@ -8,10 +8,14 @@ test("four page layouts render without overflow or browser errors", async ({
     if (message.type() === "error") errors.push(message.text());
   });
   for (const [name, url, title] of [
-    ["home", "/", "Building what's next."],
-    ["projects", "/projects", "Work that speaks for itself."],
+    [
+      "home",
+      "/",
+      "I build websites and AI automations that make business easier.",
+    ],
+    ["projects", "/projects", "Work built around real needs."],
     ["detail", "/projects/devlog", "DevLog."],
-    ["contact", "/contact", "Let's make something useful."],
+    ["contact", "/contact", "Let’s build something genuinely useful."],
   ]) {
     const response = await page.goto(url);
     expect(response?.status()).toBe(200);
@@ -42,11 +46,11 @@ test("filters include multi-category work and unfinished projects", async ({
   page,
 }) => {
   await page.goto("/projects");
-  await expect(page.locator(".workcard")).toHaveCount(6);
+  await expect(page.locator(".workcard")).toHaveCount(7);
   await page
     .getByRole("button", { name: "AI Automation", exact: true })
     .click();
-  await expect(page.locator(".workcard")).toHaveCount(2);
+  await expect(page.locator(".workcard")).toHaveCount(3);
   await expect(page.locator(".progress-status")).toHaveCount(2);
   await page.getByRole("button", { name: "Full Stack", exact: true }).click();
   await expect(page.locator(".workcard")).toHaveCount(3);
@@ -55,17 +59,10 @@ test("filters include multi-category work and unfinished projects", async ({
   await page.getByRole("button", { name: "Mobile", exact: true }).click();
   await expect(page.locator(".workcard")).toHaveCount(1);
   await page.getByRole("button", { name: "All work", exact: true }).click();
-  await expect(page.locator(".workcard")).toHaveCount(6);
+  await expect(page.locator(".workcard")).toHaveCount(7);
 });
-test("theme persists and navigation works across routes", async ({
-  page,
-  isMobile,
-}) => {
+test("navigation works across routes", async ({ page, isMobile }) => {
   await page.goto("/projects");
-  await page.getByRole("button", { name: "Switch to light theme" }).click();
-  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
-  await page.reload();
-  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
   if (isMobile)
     await page.getByRole("button", { name: "Open navigation" }).click();
   await page
@@ -111,6 +108,7 @@ test("contact validates and never pretends an unconfigured message was sent", as
 });
 test("every case study and custom 404 resolve", async ({ page }) => {
   for (const slug of [
+    "ai-receptionist",
     "devlog",
     "polymath-kids",
     "metaviz-landing",

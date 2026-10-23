@@ -21,14 +21,14 @@ export default defineConfig({
       name: "tablet",
       use: {
         ...devices["Desktop Chrome"],
-        viewport: { width: 820, height: 1180 },
+        viewport: { width: 768, height: 1024 },
       },
     },
     {
       name: "mobile",
       use: {
         ...devices["Desktop Chrome"],
-        viewport: { width: 390, height: 844 },
+        viewport: { width: 375, height: 812 },
         isMobile: true,
         hasTouch: true,
       },

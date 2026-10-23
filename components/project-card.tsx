@@ -3,9 +3,15 @@ import { ExternalLink } from "lucide-react";
 import { Github } from "./social-icons";
 import type { Project } from "@/data/projects";
 import { ProjectVisual } from "./visuals";
+
 export function ProjectLinks({ project }: { project: Project }) {
   return (
     <>
+      {project.slug === "ai-receptionist" && (
+        <Link className="text-link" href="/#contact">
+          Request Demo Access <span aria-hidden="true">→</span>
+        </Link>
+      )}
       {project.demo && (
         <a
           className="text-link"
@@ -13,7 +19,7 @@ export function ProjectLinks({ project }: { project: Project }) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <ExternalLink size={14} aria-hidden="true" /> Live Demo
+          <ExternalLink size={14} aria-hidden="true" /> Open Demo
           <span className="sr-only"> (opens in a new tab)</span>
         </a>
       )}
@@ -31,6 +37,7 @@ export function ProjectLinks({ project }: { project: Project }) {
     </>
   );
 }
+
 export function ProjectCard({
   project,
   number,
@@ -38,8 +45,14 @@ export function ProjectCard({
   project: Project;
   number: number;
 }) {
+  const hasLinks =
+    project.slug === "ai-receptionist" ||
+    project.demo ||
+    (project.github && !project.privateRepo);
   return (
-    <article className="workcard">
+    <article
+      className={`workcard ${project.slug === "ai-receptionist" ? "featured-project" : ""}`}
+    >
       <Link href={`/projects/${project.slug}`} tabIndex={-1} aria-hidden="true">
         <ProjectVisual project={project} />
       </Link>
@@ -61,7 +74,7 @@ export function ProjectCard({
         </h3>
         <p>{project.summary}</p>
         <div className="tags">
-          {project.stack.map((tech) => (
+          {project.stack.slice(0, 5).map((tech) => (
             <span key={tech}>{tech}</span>
           ))}
         </div>
@@ -70,11 +83,13 @@ export function ProjectCard({
             href={`/projects/${project.slug}`}
             aria-label={`View details for ${project.name}`}
           >
-            View case study ↗
+            View case study →
           </Link>
-          {project.featured && <span className="featured-label">Featured</span>}
+          {project.featured && (
+            <span className="featured-label">Selected work</span>
+          )}
         </div>
-        {(project.demo || (project.github && !project.privateRepo)) && (
+        {hasLinks && (
           <div className="project-links">
             <ProjectLinks project={project} />
           </div>
