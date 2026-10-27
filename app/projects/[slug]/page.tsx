@@ -208,7 +208,11 @@ export default async function ProjectPage({ params }: Props) {
             </>
           )}
           <h3>
-            {project.screenshots.length ? "Screenshots" : "Interface preview"}
+            {project.screenshots.length
+              ? "Screenshots"
+              : project.slug === "concept-science-academy"
+                ? "Academy branding"
+                : "Interface preview"}
           </h3>
           {project.screenshots.length ? (
             <div className="screenshots">
@@ -231,7 +235,7 @@ export default async function ProjectPage({ params }: Props) {
               "The interface shown is an illustrative preview based on confirmed project features, not a real product screenshot. "}
             {project.privateRepo &&
               "The professional project repository is private. "}
-            {project.imageCaption &&
+            {project.slug === "ai-receptionist" &&
               "Existing local QA screenshot of the actual interface with the backend disconnected and example greeting only. It does not demonstrate a live booking."}
           </p>
           <Link className="btn secondary" href="/projects">
