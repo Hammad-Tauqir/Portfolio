@@ -89,21 +89,20 @@ test("navigation works across routes", async ({ page, isMobile }) => {
     ).toBeFocused();
   }
 });
-test("contact form preview is visible and does not send", async ({
+test("contact form submits and reports delivery status", async ({
   page,
 }) => {
-  let requests = 0;
-  await page.route("**/*", async (route) => {
-    if (route.request().method() === "POST") {
-      requests++;
-      await route.abort();
-      return;
-    }
-    await route.continue();
+  await page.route("**/api/contact", async (route) => {
+    await route.fulfill({
+      status: 503,
+      contentType: "application/json",
+      body: JSON.stringify({ error: "Email delivery is not configured yet. Your enquiry was not sent." }),
+    });
   });
   await page.goto("/contact");
   const form = page.getByRole("form", { name: "Project enquiry form" });
   await expect(form).toBeVisible();
+  await expect(form).toHaveAttribute("data-ready", "true");
   await expect(form.getByLabel("Your name *")).toBeVisible();
   await expect(form.getByLabel("Email address *")).toBeVisible();
   await expect(form.getByLabel("What do you need? (optional)")).toBeVisible();
@@ -111,8 +110,29 @@ test("contact form preview is visible and does not send", async ({
   await expect(form.getByLabel("Budget range")).toHaveCount(0);
   await expect(form.getByLabel("Existing website or reference link")).toHaveCount(0);
   await expect(form.getByLabel("Tell me about your project *")).toBeVisible();
-  await expect(form.getByRole("button", { name: /Send enquiry/ })).toBeDisabled();
-  await expect(page.getByText("This form is a preview and does not submit yet.", { exact: false })).toBeVisible();
+  if ((await form.getAttribute("data-delivery-ready")) === "true") {
+    await expect(form.getByRole("button", { name: /Send enquiry/ })).toBeEnabled();
+    await form.getByLabel("Your name *").fill("Test Person");
+    await form.getByLabel("Email address *").fill("test@example.com");
+    await form.getByLabel("Tell me about your project *").fill("I would like to discuss a new website project.");
+    await form.getByRole("button", { name: /Send enquiry/ }).click();
+    await expect(form.getByRole("status")).toContainText("not sent");
+
+    await page.unroute("**/api/contact");
+    await page.route("**/api/contact", async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ message: "Your enquiry was sent successfully." }),
+      });
+    });
+    await form.getByRole("button", { name: /Send enquiry/ }).click();
+    await expect(form.getByRole("status")).toContainText("sent successfully");
+    await expect(form.getByLabel("Your name *")).toBeEmpty();
+  } else {
+    await expect(form.getByRole("button", { name: /Send enquiry/ })).toBeDisabled();
+    await expect(form.getByRole("status")).toContainText("not configured yet");
+  }
   await expect(
     page.locator('.contact-options a[href="https://github.com/Hammad-Tauqir"]'),
   ).toBeVisible();
@@ -122,10 +142,9 @@ test("contact form preview is visible and does not send", async ({
   await page.getByRole("link", { name: "Request Demo Access" }).click();
   await expect(page).toHaveURL(/\/#contact$/);
   await expect(page.locator("#contact .contact-options")).toBeVisible();
-  expect(requests).toBe(0);
 });
 
-test("contact endpoint validates enquiries without claiming delivery", async ({ request }) => {
+test("contact endpoint validates enquiries", async ({ request }) => {
   const invalid = await request.post("/api/contact", {
     data: { name: " ", email: "invalid", projectType: "Unknown", message: "short" },
   });
@@ -137,16 +156,21 @@ test("contact endpoint validates enquiries without claiming delivery", async ({ 
     message: expect.any(String),
   });
 
-  const valid = await request.post("/api/contact", {
+  const malformed = await request.post("/api/contact", {
+    data: "{invalid",
+    headers: { "Content-Type": "application/json" },
+  });
+  expect(malformed.status()).toBe(400);
+
+  const bot = await request.post("/api/contact", {
     data: {
       name: "Test Person",
       email: "test@example.com",
-      projectType: "",
       message: "I would like to discuss a new website project.",
+      website: "https://spam.example",
     },
   });
-  expect(valid.status()).toBe(503);
-  expect((await valid.json()).error).toContain("not sent");
+  expect(bot.status()).toBe(200);
 });
 test("every project and custom 404 resolve", async ({ page }) => {
   for (const slug of [

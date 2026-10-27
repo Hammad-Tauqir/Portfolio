@@ -13,24 +13,26 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
-    "next": "16.4.2",
-    "react": "latest",
-    "react-dom": "latest",
+    "@fontsource/dm-mono": "latest",
+    "@fontsource/space-grotesk": "latest",
     "framer-motion": "latest",
     "lucide-react": "latest",
-    "@fontsource/space-grotesk": "latest",
-    "@fontsource/dm-mono": "latest"
+    "next": "16.4.2",
+    "nodemailer": "^10.2.1",
+    "react": "latest",
+    "react-dom": "latest"
   },
   "devDependencies": {
-    "typescript": "latest",
+    "@playwright/test": "latest",
+    "@tailwindcss/postcss": "latest",
     "@types/node": "latest",
+    "@types/nodemailer": "^8.0.2",
     "@types/react": "latest",
     "@types/react-dom": "latest",
-    "tailwindcss": "latest",
-    "@tailwindcss/postcss": "latest",
     "eslint": "^9.0.0",
     "eslint-config-next": "latest",
     "prettier": "latest",
-    "@playwright/test": "latest"
+    "tailwindcss": "latest",
+    "typescript": "latest"
   }
 }

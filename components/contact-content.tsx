@@ -13,7 +13,7 @@ export function ContactContent() {
         AI Receptionist access, mention that you would like to try the portfolio
         demo.
       </p>
-      <ContactForm />
+      <ContactForm deliveryReady={Boolean(process.env.SMTP_USER && process.env.SMTP_PASSWORD && process.env.CONTACT_TO_EMAIL)} />
       {site.email ? (
         <a className="btn primary contact-email" href={`mailto:${site.email}`}>
           <Mail size={18} aria-hidden="true" />

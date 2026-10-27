@@ -78,7 +78,7 @@ The default Open Graph image is generated locally using the portfolio's colors a
 
 ## Contact form
 
-The enquiry form preview appears on Home and `/contact`. It collects name, email and project description, with an optional project type. The `POST /api/contact` endpoint validates those fields and returns field errors for invalid input. Valid input receives a 503 response explaining that delivery is not configured; no enquiry is saved or sent. The submit button remains disabled until email delivery and spam protection are added.
+The enquiry form appears on Home and `/contact`. It collects name, email and project description, with an optional project type. `POST /api/contact` validates those fields and sends valid enquiries through Gmail SMTP to `CONTACT_TO_EMAIL`, using the visitor's address as Reply-To. A hidden field filters basic bot submissions. Set `SMTP_USER`, `SMTP_PASSWORD` (a Google App Password), and `CONTACT_TO_EMAIL` in the ignored `.env.local` file and in the deployment's private environment settings, then restart or redeploy the app. If these are missing, the form is disabled, the API returns 503 and no email is sent. Once configured, the form shows sending, success and error feedback. Do not put the App Password in source control.
 
 ## Environment and SEO
 
