@@ -14,7 +14,7 @@ test("four page layouts render without overflow or browser errors", async ({
       "I build websites and automations that make business easier.",
     ],
     ["projects", "/projects", "Explore the projects."],
-    ["detail", "/projects/devlog", "DevLog."],
+    ["detail", "/projects/concept-science-academy", "Concept Science Academy."],
     ["contact", "/contact", "Let’s build something genuinely useful."],
   ]) {
     const response = await page.goto(url);
@@ -124,7 +124,7 @@ test("contact is honest and never sends a message during testing", async ({
 test("every project and custom 404 resolve", async ({ page }) => {
   for (const slug of [
     "ai-receptionist",
-    "devlog",
+    "concept-science-academy",
     "polymath-kids",
     "mobile-app-marketing-lead-capture",
     "design-review-client-feedback",

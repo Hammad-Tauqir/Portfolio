@@ -29,7 +29,7 @@ export type Project = {
   existingIntegrations?: string;
   visual:
     | "receptionist"
-    | "devlog"
+    | "academy"
     | "polymath"
     | "metaviz"
     | "design-review"
@@ -111,51 +111,37 @@ export const projects: Project[] = [
   },
   {
     ...defaults,
-    slug: "devlog",
-    name: "DevLog",
+    slug: "concept-science-academy",
+    name: "Concept Science Academy",
+    subtitle: "Student & Fee Management Platform",
     teaser:
-      "Track development work, manage projects, and generate daily reports.",
+      "A staff workspace for student records, fee collection, and reports.",
     categories: ["Full Stack"],
-    context: "Personal project",
-    statusLabel: "Completed · Live on Vercel",
+    context: "Academy management project",
+    statusLabel: "Built · Staff sign-in required",
     featured: true,
     summary:
-      "A developer journal for tracking daily progress, managing projects, maintaining coding streaks, and preparing end-of-day reports. Deployed on Vercel.",
-    stack: ["Next.js", "TypeScript", "Prisma", "MySQL", "JWT", "Tailwind CSS"],
+      "A private academy workspace that brings student records, monthly fee collection, payment history, and financial reports together for staff.",
+    stack: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "Tailwind CSS"],
     problem:
-      "Development updates spread across commits, projects, and notes make daily progress difficult to review and end-of-day reporting time-consuming.",
+      "Keeping student details, monthly charges, payments, and outstanding balances in separate records makes it difficult for academy staff to get an accurate view of collections.",
     solution:
-      "DevLog brings project tracking, daily logs, coding streaks, and report generation into one developer workspace.",
+      "I built a permission-controlled workspace where staff can maintain student records, generate monthly fees, record payments, and review the resulting balances and reports.",
     features: [
-      "Email and password account creation and sign-in",
-      "Daily development logs with CRUD operations",
-      "Project management and coding streak tracking",
-      "Dashboard activity statistics",
-      "Daily report generation",
-      "Pagination",
-      "Resource-based authorization",
+      "Searchable student directory with class, section, and status filters",
+      "Monthly fee generation, agreed-fee adjustments, and previous-dues tracking",
+      "Payment recording with partial, paid, and pending balances and payment history",
+      "Dashboard showing student, fee, and recent payment summaries",
+      "Filtered reports with class-wise and student-wise breakdowns and PDF export",
+      "Staff accounts with configurable permissions and password recovery",
     ],
-    visual: "devlog",
-    image: "/images/projects/devlog-signup.webp",
+    visual: "academy",
+    image: "/images/projects/concept-science-academy-logo.png",
     imageAlt:
-      "DevLog live sign-up screen with reporting introduction and account form",
-    screenshots: [
-      {
-        src: "/images/projects/devlog-homepage.webp",
-        alt: "DevLog deployed homepage with Log In and Create an Account links",
-        width: 1440,
-        height: 900,
-      },
-      {
-        src: "/images/projects/devlog-signup.webp",
-        alt: "DevLog sign-up page with name, email, and password fields and daily reporting introduction",
-        width: 1440,
-        height: 900,
-      },
-    ],
-    demo: "https://dev-log-teal.vercel.app/",
+      "Concept Science Academy logo used as the project cover",
+    imageCaption: "Academy branding · staff-only application",
     outcome:
-      "The app is live on Vercel. Its public landing and account pages are available without signing in; the developer workspace requires an account.",
+      "The application has a staff sign-in and permission-gated pages. Student and payment data are kept out of this public portfolio.",
   },
   {
     ...defaults,

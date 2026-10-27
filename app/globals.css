@@ -889,6 +889,14 @@ main {
   object-position: top center;
   transition: transform 0.9s var(--ease);
 }
+.preview.academy {
+  background: radial-gradient(circle at 50% 42%, #fff 0, #edf6ff 52%, #c6dafa 100%);
+}
+.preview.academy .project-image {
+  object-fit: contain;
+  object-position: center;
+  padding: 8%;
+}
 .feature:hover .project-image,
 .workcard:hover .project-image {
   transform: scale(1.045);
