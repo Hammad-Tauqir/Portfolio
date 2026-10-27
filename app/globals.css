@@ -1571,6 +1571,7 @@ main {
 }
 .workcard {
   display: flex;
+  flex-direction: column;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--card);
@@ -1596,6 +1597,29 @@ main {
   display: flex;
   flex-direction: column;
   width: 100%;
+}
+.compact-watch-demo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  margin: 0 24px 24px;
+  padding: 10px 16px;
+  border: 1px solid var(--lime);
+  border-radius: 999px;
+  color: var(--lime);
+  font-size: 14px;
+  font-weight: 600;
+}
+.compact-watch-demo:hover,
+.compact-watch-demo:focus-visible {
+  background: var(--lime);
+  color: var(--ink-on-lime);
+}
+.feature-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 .card-media {
   padding: 10px 10px 0;
@@ -1673,6 +1697,22 @@ main {
 /* ==========================================================================
    Project detail
    ========================================================================== */
+.case-demo {
+  padding-bottom: 56px;
+  scroll-margin-top: 110px;
+}
+.case-demo h2 {
+  margin-bottom: 18px;
+  font-size: clamp(24px, 3vw, 34px);
+}
+.case-demo video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius);
+  background: var(--bg-2);
+}
 .case-hero {
   position: relative;
   display: grid;

@@ -85,6 +85,23 @@ export default async function ProjectPage({ params }: Props) {
           <ProjectVisual project={project} priority />
         </div>
       </section>
+      {project.video && (
+        <section className="wrap case-demo" id="demo-video" aria-labelledby="demo-video-title">
+          <h2 id="demo-video-title">Watch the demo</h2>
+          <video
+            aria-label={`${project.name} demo video`}
+            controls
+            playsInline
+            preload="metadata"
+            poster={project.image}
+            width={1920}
+            height={1080}
+          >
+            <source src={project.video} type="video/mp4" />
+            Your browser does not support video playback.
+          </video>
+        </section>
+      )}
       <div
         className={`wrap case-facts ${project.slug === "ai-receptionist" ? "case-facts-detailed" : ""}`}
       >

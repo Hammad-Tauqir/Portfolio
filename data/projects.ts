@@ -63,12 +63,12 @@ export const projects: Project[] = [
     slug: "ai-receptionist",
     name: "AI Receptionist",
     subtitle: "Customer Support & Appointment Automation",
-    teaser: "An invite-only website assistant for enquiries and appointments.",
+    teaser: "A website assistant for service enquiries and appointments. Watch the demo.",
     categories: ["Automation"],
     context: "Invite-only portfolio demo",
     featured: true,
     summary:
-      "An AI-powered website assistant that answers business questions, captures leads, and manages appointments through conversational chat and voice input.",
+      "A protected website assistant that answers service questions, captures leads with permission, and helps visitors book or change appointments.",
     stack: [
       "n8n",
       "OpenAI",
@@ -91,10 +91,11 @@ export const projects: Project[] = [
       "Owner-approved, invite-only access",
     ],
     visual: "receptionist",
-    image: "/images/projects/ai-receptionist.webp",
+    image: "/images/projects/ai-receptionist-demo-poster.webp",
     imageAlt:
-      "Nova Digital AI Receptionist: services introduction and chat panel with voice controls, captured in disconnected demo mode",
-    imageCaption: "Actual interface · disconnected demo capture",
+      "Frame from the Nova Digital AI Receptionist demo showing service information in the chat interface",
+    video: "/videos/nova-ai-receptionist-final.mp4",
+    imageCaption: "Frame from the demo video",
     screenshots: [
       {
         src: "/images/projects/ai-receptionist-full.webp",

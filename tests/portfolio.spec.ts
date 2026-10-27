@@ -388,6 +388,10 @@ test("project archive keeps cards short and links to full details", async ({
   await page.goto("/");
   await page.evaluate(() => document.fonts.ready);
   await expect(page.locator(".workcard")).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "Watch Demo" })).toHaveAttribute(
+    "href",
+    "/projects/ai-receptionist#demo-video",
+  );
   const navigation = page.getByRole("navigation", { name: "Main navigation" });
   if (testInfo.project.name === "mobile") {
     await page.getByRole("button", { name: "Open navigation" }).click();
@@ -409,27 +413,29 @@ test("project archive keeps cards short and links to full details", async ({
   expect(
     await image.evaluate((el) => (el as HTMLImageElement).naturalWidth),
   ).toBeGreaterThan(0);
-  await page.locator(".case-study-grid .workcard").first().click();
-  await expect(page).toHaveURL(/\/projects\/ai-receptionist$/);
-  await expect(
-    page.getByRole("heading", { name: "The problem" }),
-  ).toBeVisible();
-  for (const heading of [
-    "The solution",
-    "Key features",
-    "How it works",
-    "Workflow architecture",
-    "My contribution",
-    "Key engineering decisions",
-    "Outcome & scope",
-  ]) {
+  await expect(image).toHaveAttribute("alt", /Frame from the Nova Digital AI Receptionist demo/);
+  const watchDemo = page.locator(".case-study-grid .workcard").first().getByRole("link", { name: "Watch Demo" });
+  await expect(watchDemo).toHaveAttribute("href", "/projects/ai-receptionist#demo-video");
+  await watchDemo.click();
+  await expect(page).toHaveURL(/\/projects\/ai-receptionist#demo-video$/);
+  for (const heading of ["Watch the demo", "The project", "What it does", "Current scope"]) {
     await expect(page.getByRole("heading", { name: heading })).toBeVisible();
   }
-  await expect(page.locator(".case-workflows > div")).toHaveCount(3);
+  const video = page.getByLabel("AI Receptionist demo video");
+  await expect(video).toBeVisible();
+  await expect(video).toHaveAttribute("poster", "/images/projects/ai-receptionist-demo-poster.webp");
+  await expect(video).toHaveAttribute("preload", "metadata");
+  await expect(video).toHaveAttribute("playsinline", "");
+  await expect(video.locator("source")).toHaveAttribute("src", "/videos/nova-ai-receptionist-final.mp4");
+  await expect.poll(() => video.evaluate((element) => (element as HTMLVideoElement).duration)).toBeGreaterThan(120);
+  expect(await video.evaluate((element) => (element as HTMLVideoElement).paused)).toBe(true);
+  expect(await video.evaluate((element) => (element as HTMLVideoElement).autoplay)).toBe(false);
+  expect(await video.evaluate((element) => (element as HTMLVideoElement).controls)).toBe(true);
   await expect(
     page.getByText("Full-Stack Development & Automation"),
   ).toBeVisible();
-  await expect(page.getByRole("link", { name: "Watch Demo" })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "Watch Demo" })).toHaveAttribute("href", "/projects/ai-receptionist#demo-video");
+  await expect(page.getByText("does not handle phone calls")).toBeVisible();
   await expect(
     page.getByRole("heading", { name: "Screenshots" }),
   ).toBeVisible();

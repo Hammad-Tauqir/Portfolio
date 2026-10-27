@@ -39,15 +39,15 @@ export function WorkspaceVisual() {
         </div>
         <Image
           className="hero-product-image"
-          src="/images/projects/ai-receptionist.webp"
-          width={1440}
-          height={900}
+          src="/images/projects/ai-receptionist-demo-poster.webp"
+          width={1280}
+          height={720}
           sizes="(max-width: 1000px) 90vw, 45vw"
           preload
-          alt="Actual Nova AI Receptionist interface in disconnected demo mode"
+          alt="Frame from the Nova Digital AI Receptionist demo showing a service enquiry"
         />
         <p className="hero-capture-caption">
-          Actual interface · disconnected demo capture
+          Frame from the demo video
         </p>
       </div>
       <div className="hero-chip hero-chip-flow">

@@ -24,14 +24,12 @@ export function ProjectLinks({ project }: { project: Project }) {
         </a>
       )}
       {project.video && (
-        <a
+        <Link
           className="text-link"
-          href={project.video}
-          target="_blank"
-          rel="noopener noreferrer"
+          href={`/projects/${project.slug}#demo-video`}
         >
-          Watch Demo<span className="sr-only"> (opens in a new tab)</span>
-        </a>
+          Watch Demo
+        </Link>
       )}
       {project.github && !project.privateRepo && (
         <a
@@ -98,6 +96,11 @@ export function ProjectCard({ project }: { project: Project }) {
           </span>
         </div>
       </Link>
+      {project.video && (
+        <Link className="compact-watch-demo" href={`/projects/${project.slug}#demo-video`}>
+          Watch Demo <ArrowRight size={15} aria-hidden="true" />
+        </Link>
+      )}
     </article>
   );
 }
@@ -146,9 +149,16 @@ export function FeaturedProject({
             <span key={tech}>{tech}</span>
           ))}
         </div>
-        <Link className="btn ghost" href={href}>
-          View case study <ArrowUpRight size={16} aria-hidden="true" />
-        </Link>
+        <div className="feature-actions">
+          <Link className="btn ghost" href={href}>
+            View case study <ArrowUpRight size={16} aria-hidden="true" />
+          </Link>
+          {project.video && (
+            <Link className="btn ghost" href={`${href}#demo-video`}>
+              Watch Demo <ArrowRight size={16} aria-hidden="true" />
+            </Link>
+          )}
+        </div>
       </div>
     </article>
   );

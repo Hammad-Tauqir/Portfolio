@@ -6,6 +6,7 @@ export default defineConfig([
   ...nextTs,
   globalIgnores([
     ".next/**",
+    ".next-dev/**",
     "out/**",
     "next-env.d.ts",
     "Portfolio-Design-Files/**",
