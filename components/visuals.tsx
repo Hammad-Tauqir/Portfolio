@@ -39,7 +39,7 @@ export function WorkspaceVisual() {
         </div>
         <Image
           className="hero-product-image"
-          src="/images/projects/ai-receptionist-demo-poster-2.webp"
+          src="/images/projects/ai-receptionist-demo-poster-4.webp"
           width={1280}
           height={720}
           sizes="(max-width: 1000px) 90vw, 45vw"

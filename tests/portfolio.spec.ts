@@ -426,10 +426,10 @@ test("project archive keeps cards short and links to full details", async ({
   }
   const video = page.getByLabel("AI Receptionist demo video");
   await expect(video).toBeVisible();
-  await expect(video).toHaveAttribute("poster", "/images/projects/ai-receptionist-demo-poster-2.webp");
+  await expect(video).toHaveAttribute("poster", "/images/projects/ai-receptionist-demo-poster-4.webp");
   await expect(video).toHaveAttribute("preload", "metadata");
   await expect(video).toHaveAttribute("playsinline", "");
-  await expect(video.locator("source")).toHaveAttribute("src", "/videos/nova-ai-receptionist-final-2.mp4");
+  await expect(video.locator("source")).toHaveAttribute("src", "/videos/nova-ai-receptionist-final-4.mp4");
   await expect.poll(() => video.evaluate((element) => (element as HTMLVideoElement).duration)).toBeGreaterThan(74);
   expect(await video.evaluate((element) => (element as HTMLVideoElement).duration)).toBeLessThan(76);
   const videoBox = await video.boundingBox();

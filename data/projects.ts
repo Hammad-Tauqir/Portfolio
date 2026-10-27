@@ -91,10 +91,10 @@ export const projects: Project[] = [
       "Owner-approved, invite-only access",
     ],
     visual: "receptionist",
-    image: "/images/projects/ai-receptionist-demo-poster-2.webp",
+    image: "/images/projects/ai-receptionist-demo-poster-4.webp",
     imageAlt:
       "Frame from the Nova Digital AI Receptionist demo showing service information in the chat interface",
-    video: "/videos/nova-ai-receptionist-final-2.mp4",
+    video: "/videos/nova-ai-receptionist-final-4.mp4",
     screenshots: [
       {
         src: "/images/projects/ai-receptionist-full.webp",
