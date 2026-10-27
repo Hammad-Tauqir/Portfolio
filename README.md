@@ -78,23 +78,11 @@ The default Open Graph image is generated locally using the portfolio's colors a
 
 ## Contact form
 
-The default form validates name, email, subject and message but sends **nothing** until an endpoint is configured. It clearly says that sending is unavailable. A valid attempt shows an explicit “not sent” configuration message. Input is retained on errors, duplicate submissions are disabled while sending, and requests time out after 15 seconds.
-
-### Formspree (ready-to-connect)
-
-1. Create your own Formspree form and verify its recipient.
-2. Set `NEXT_PUBLIC_CONTACT_ENDPOINT` in `.env.local` to the form's real HTTPS endpoint, for example the URL supplied in your Formspree dashboard.
-3. Restart the dev server, or rebuild/redeploy production.
-4. Submit a real test and confirm receipt in the provider dashboard and destination inbox.
-
-`components/contact-form.tsx` sends JSON `{ name, email, subject, message }` with `Accept: application/json`. It reports success only after an HTTP success response; HTTP errors and network failures show an error. Provider acceptance does not guarantee inbox delivery.
-
-For Web3Forms, adapt the payload to its documented fields and public access key. For your own API route, validate inputs again on the server, configure rate limiting/spam protection, and return non-2xx for failed deliveries. Keep private credentials in server-only environment variables; never add them to a `NEXT_PUBLIC_` variable. This implementation does not create an unused API endpoint.
+The enquiry form preview appears on Home and `/contact`. It collects name, email, project type and project description, plus optional timeline, budget and reference link. Email sending has deliberately not been connected yet. The submit button is disabled and the page says clearly that no message is sent. Backend delivery and spam protection can be added later.
 
 ## Environment and SEO
 
 - `NEXT_PUBLIC_SITE_URL`: actual production origin, including `https://`, without a trailing slash. Used for canonical links, absolute metadata URLs and sitemap entries. Leave empty for local work. No invented production hostname is used; the sitemap is empty until this is configured.
-- `NEXT_PUBLIC_CONTACT_ENDPOINT`: optional public, JSON-compatible form service endpoint.
 
 These public environment values are embedded at build time. Rebuild after changing them. Theme preference is saved in localStorage, defaults to dark, and is applied before page paint. It still works when storage is unavailable. Reduced-motion preferences are respected.
 

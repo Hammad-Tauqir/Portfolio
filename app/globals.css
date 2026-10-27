@@ -1304,7 +1304,10 @@ main {
   padding-bottom: 20px;
 }
 
-/* Optional contact form (rendered once a form endpoint is configured) */
+/* Contact enquiry form */
+.formbox {
+  width: 100%;
+}
 .formbox form {
   display: grid;
   gap: 16px;
@@ -1324,16 +1327,42 @@ main {
   letter-spacing: 0.1em;
 }
 .formbox input,
+.formbox select,
 .formbox textarea {
   width: 100%;
   padding: 13px 15px;
   border: 1px solid var(--line-2);
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+}
+.formbox select option {
+  background: var(--bg-2);
+  color: var(--text);
+}
+.formbox input:focus-visible,
+.formbox select:focus-visible,
+.formbox textarea:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 2px;
+}
+.formbox input::placeholder,
+.formbox textarea::placeholder {
+  color: var(--dim);
 }
 .formbox textarea {
   min-height: 140px;
   resize: vertical;
+}
+.contact-submit {
+  justify-self: start;
+}
+.contact-submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  box-shadow: none;
 }
 .field-error {
   margin-top: 6px;

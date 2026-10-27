@@ -89,7 +89,7 @@ test("navigation works across routes", async ({ page, isMobile }) => {
     ).toBeFocused();
   }
 });
-test("contact is honest and never sends a message during testing", async ({
+test("contact form preview is visible and does not send", async ({
   page,
 }) => {
   let requests = 0;
@@ -102,19 +102,19 @@ test("contact is honest and never sends a message during testing", async ({
     await route.continue();
   });
   await page.goto("/contact");
-  await expect(page.locator("form")).toHaveCount(0);
+  const form = page.getByRole("form", { name: "Project enquiry form" });
+  await expect(form).toBeVisible();
+  await expect(form.getByLabel("Your name *")).toBeVisible();
+  await expect(form.getByLabel("Email address *")).toBeVisible();
+  await expect(form.getByLabel("What do you need? *")).toBeVisible();
+  await expect(form.getByLabel("Tell me about your project *")).toBeVisible();
+  await expect(form.getByRole("button", { name: /Send enquiry/ })).toBeDisabled();
+  await expect(page.getByText("This form is a preview and does not submit yet.", { exact: false })).toBeVisible();
   await expect(
     page.locator('.contact-options a[href="https://github.com/Hammad-Tauqir"]'),
   ).toBeVisible();
-  if (await page.locator('.contact-options a[href^="mailto:"]').count()) {
-    await expect(
-      page.locator('.contact-options a[href^="mailto:"]'),
-    ).toBeVisible();
-  } else {
-    await expect(page.locator(".contact-pending")).toContainText(
-      "not available yet",
-    );
-  }
+  await page.goto("/");
+  await expect(page.getByRole("form", { name: "Project enquiry form" })).toBeVisible();
   await page.goto("/projects/ai-receptionist");
   await page.getByRole("link", { name: "Request Demo Access" }).click();
   await expect(page).toHaveURL(/\/#contact$/);

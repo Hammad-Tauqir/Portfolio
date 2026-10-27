@@ -1,6 +1,7 @@
 import { site } from "@/config/site";
 import { SocialLinks, CvLink } from "./links";
 import { ArrowUpRight, Mail, MapPin } from "lucide-react";
+import { ContactForm } from "./contact-form";
 
 export function ContactContent() {
   return (
@@ -12,18 +13,14 @@ export function ContactContent() {
         AI Receptionist access, mention that you would like to try the portfolio
         demo.
       </p>
+      <ContactForm />
       {site.email ? (
         <a className="btn primary contact-email" href={`mailto:${site.email}`}>
           <Mail size={18} aria-hidden="true" />
           {site.email}
           <ArrowUpRight size={16} aria-hidden="true" />
         </a>
-      ) : (
-        <p className="contact-pending">
-          Direct contact and demo access requests are not available yet. You can
-          explore my public work on GitHub.
-        </p>
-      )}
+      ) : null}
       <div className="contact-actions">
         <SocialLinks />
         <CvLink />

@@ -19,7 +19,6 @@ export const site = {
   cv: "", // TODO: Add CV file to public/documents/hammad-tauqir-cv.pdf, then set '/documents/hammad-tauqir-cv.pdf'
   profileImage: "", // TODO: Add public/images/profile/hammad-tauqir.webp, then set '/images/profile/hammad-tauqir.webp'
   url: (process.env.NEXT_PUBLIC_SITE_URL || "").replace(/\/$/, ""),
-  formEndpoint: process.env.NEXT_PUBLIC_CONTACT_ENDPOINT || "",
   education: {
     degree: "BS Computer Science",
     school: "FAST National University of Computer and Emerging Sciences",
