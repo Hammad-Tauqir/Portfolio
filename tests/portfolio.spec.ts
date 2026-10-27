@@ -414,6 +414,9 @@ test("project archive keeps cards short and links to full details", async ({
     await image.evaluate((el) => (el as HTMLImageElement).naturalWidth),
   ).toBeGreaterThan(0);
   await expect(image).toHaveAttribute("alt", /Frame from the Nova Digital AI Receptionist demo/);
+  const previewBox = await page.locator(".case-study-grid .preview").first().boundingBox();
+  expect(previewBox!.width / previewBox!.height).toBeCloseTo(16 / 9, 1);
+  expect(await image.evaluate((element) => getComputedStyle(element).objectFit)).toBe("contain");
   const watchDemo = page.locator(".case-study-grid .workcard").first().getByRole("link", { name: "Watch Demo" });
   await expect(watchDemo).toHaveAttribute("href", "/projects/ai-receptionist#demo-video");
   await watchDemo.click();
@@ -423,11 +426,14 @@ test("project archive keeps cards short and links to full details", async ({
   }
   const video = page.getByLabel("AI Receptionist demo video");
   await expect(video).toBeVisible();
-  await expect(video).toHaveAttribute("poster", "/images/projects/ai-receptionist-demo-poster.webp");
+  await expect(video).toHaveAttribute("poster", "/images/projects/ai-receptionist-demo-poster-2.webp");
   await expect(video).toHaveAttribute("preload", "metadata");
   await expect(video).toHaveAttribute("playsinline", "");
-  await expect(video.locator("source")).toHaveAttribute("src", "/videos/nova-ai-receptionist-final.mp4");
-  await expect.poll(() => video.evaluate((element) => (element as HTMLVideoElement).duration)).toBeGreaterThan(120);
+  await expect(video.locator("source")).toHaveAttribute("src", "/videos/nova-ai-receptionist-final-2.mp4");
+  await expect.poll(() => video.evaluate((element) => (element as HTMLVideoElement).duration)).toBeGreaterThan(74);
+  expect(await video.evaluate((element) => (element as HTMLVideoElement).duration)).toBeLessThan(76);
+  const videoBox = await video.boundingBox();
+  expect(videoBox!.width / videoBox!.height).toBeCloseTo(16 / 9, 1);
   expect(await video.evaluate((element) => (element as HTMLVideoElement).paused)).toBe(true);
   expect(await video.evaluate((element) => (element as HTMLVideoElement).autoplay)).toBe(false);
   expect(await video.evaluate((element) => (element as HTMLVideoElement).controls)).toBe(true);

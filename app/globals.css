@@ -901,6 +901,14 @@ main {
 .workcard:hover .project-image {
   transform: scale(1.045);
 }
+.preview.receptionist {
+  aspect-ratio: 16 / 9;
+}
+.preview.receptionist .project-image {
+  object-fit: contain;
+  object-position: center;
+  transform: none;
+}
 .illustration-label {
   position: absolute;
   left: 12px;
@@ -1708,7 +1716,9 @@ main {
 .case-demo video {
   display: block;
   width: 100%;
+  height: auto;
   aspect-ratio: 16 / 9;
+  object-fit: contain;
   border: 1px solid var(--line-2);
   border-radius: var(--radius);
   background: var(--bg-2);
