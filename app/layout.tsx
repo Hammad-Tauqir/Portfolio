@@ -8,17 +8,18 @@ import "@fontsource/dm-mono/500.css";
 import "./globals.css";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
+import { Spotlight } from "@/components/spotlight";
 import { site } from "@/config/site";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url || "http://localhost:3000"),
   title: {
-    default: `${site.name} — Full-Stack Developer & AI Automation Builder`,
+    default: `${site.name} — Full-Stack Developer & Automation Builder`,
     template: `%s | ${site.name}`,
   },
   description: site.intro,
   openGraph: {
-    title: `${site.name} — Full-Stack Developer & AI Automation Builder`,
+    title: `${site.name} — Full-Stack Developer & Automation Builder`,
     description: site.intro,
     type: "website",
     locale: "en_US",
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — Full-Stack Developer & AI Automation Builder`,
+    title: `${site.name} — Full-Stack Developer & Automation Builder`,
     description: site.intro,
   },
   icons: { icon: "/favicon.svg" },
@@ -35,8 +36,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  colorScheme: "light",
-  themeColor: "#f4f1e9",
+  colorScheme: "dark",
+  themeColor: "#07080b",
 };
 
 export default function RootLayout({
@@ -49,6 +50,12 @@ export default function RootLayout({
           Skip to content
         </a>
         <div id="top" />
+        <div className="backdrop" aria-hidden="true">
+          <span className="glow glow-a" />
+          <span className="glow glow-b" />
+          <span className="grid-lines" />
+        </div>
+        <Spotlight />
         <Navigation />
         {children}
         <Footer />

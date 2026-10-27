@@ -5,7 +5,7 @@ import { ContactContent } from "@/components/contact-content";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Discuss a web application, business integration, or AI automation with Hammad Tauqir.",
+    "Discuss a web application, business integration, or automation with Hammad Tauqir.",
   ...(site.url ? { alternates: { canonical: `${site.url}/contact` } } : {}),
 };
 
@@ -13,18 +13,22 @@ export default function ContactPage() {
   return (
     <main id="main-content">
       <section className="wrap page-head">
+        <span className="page-glow" aria-hidden="true" />
         <span className="eyebrow">CONTACT / START A CONVERSATION</span>
         <h1>
           Let’s build something
           <br />
-          <span className="accent">genuinely useful.</span>
+          <span className="gradient-text">genuinely useful.</span>
         </h1>
         <p>
           Share the website, tool, or workflow you have in mind. A little
           context about the problem is the best place to start.
         </p>
       </section>
-      <section className="wrap" aria-label="Contact information and form">
+      <section
+        className="wrap contact-page"
+        aria-label="Contact information and form"
+      >
         <ContactContent />
       </section>
     </main>

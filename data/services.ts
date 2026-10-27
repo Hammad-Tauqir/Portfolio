@@ -6,7 +6,7 @@ export const services = [
     icon: "frontend",
   },
   {
-    title: "AI Assistants & n8n Automations",
+    title: "Assistants & Automations",
     description:
       "Focused assistants and workflows that handle repeat tasks while keeping important decisions visible and reviewable.",
     icon: "automation",

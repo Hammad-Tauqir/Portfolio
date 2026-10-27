@@ -1,36 +1,38 @@
 import { site } from "@/config/site";
 import { SocialLinks, CvLink } from "./links";
-import { ContactForm } from "./contact-form";
+import { ArrowUpRight, Mail, MapPin } from "lucide-react";
+
 export function ContactContent() {
   return (
-    <div className="contact-layout">
-      <div>
-        <div className="contact-note">
-          <small>01 / OPPORTUNITIES</small>
-          <b>Development roles</b>Open to full-stack, backend and AI automation
-          opportunities.
-          <p className="availability">
-            <span className="dot" /> {site.availability}
-          </p>
-        </div>
-        <div className="contact-note">
-          <small>02 / COLLABORATION</small>
-          <b>Projects & automation</b>Available to discuss websites, API
-          integrations, and practical business workflows.
-        </div>
-        <div className="contact-note">
-          <small>03 / LOCATION</small>
-          <b>{site.location}</b>
-          {site.email ? (
-            <a href={`mailto:${site.email}`}>{site.email}</a>
-          ) : (
-            <p>Professional email to be added.</p>
-          )}
-          <SocialLinks />
-          <CvLink />
-        </div>
+    <div className="contact-options spot">
+      <span className="eyebrow">PROJECTS · OPPORTUNITIES · DEMO ACCESS</span>
+      <h2>Let’s talk about your next build.</h2>
+      <p>
+        Share what you want to build, the tools you use, and your timeline. For
+        AI Receptionist access, mention that you would like to try the portfolio
+        demo.
+      </p>
+      {site.email ? (
+        <a className="btn primary contact-email" href={`mailto:${site.email}`}>
+          <Mail size={18} aria-hidden="true" />
+          {site.email}
+          <ArrowUpRight size={16} aria-hidden="true" />
+        </a>
+      ) : (
+        <p className="contact-pending">
+          Direct contact and demo access requests are not available yet. You can
+          explore my public work on GitHub.
+        </p>
+      )}
+      <div className="contact-actions">
+        <SocialLinks />
+        <CvLink />
       </div>
-      <ContactForm />
+      <p className="contact-location">
+        <span className="pulse" aria-hidden="true" />
+        <MapPin size={14} aria-hidden="true" />
+        {site.location} · Open to development opportunities
+      </p>
     </div>
   );
 }

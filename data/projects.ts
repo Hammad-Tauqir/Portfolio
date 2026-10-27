@@ -2,32 +2,43 @@ export const categories = [
   "All",
   "Full Stack",
   "Frontend",
-  "Mobile",
-  "AI Automation",
+  "Automation",
 ] as const;
 export type Category = Exclude<(typeof categories)[number], "All">;
 export type Project = {
   slug: string;
   name: string;
+  subtitle?: string;
+  projectType?: string;
+  role?: string;
   categories: Category[];
   context: string;
   status: "Completed" | "In Progress";
+  statusLabel?: string;
   featured: boolean;
   professional?: boolean;
   summary: string;
+  teaser?: string;
   stack: string[];
   problem: string;
   solution: string;
-  features: string[];
+  features: (string | { title: string; description: string })[];
+  technicalHighlights?: string[];
+  outcome?: string;
+  attribution?: string;
+  existingIntegrations?: string;
   visual:
     | "receptionist"
     | "devlog"
     | "polymath"
     | "metaviz"
-    | "banking"
+    | "design-review"
     | "automation";
   image: string;
-  screenshots: { src: string; alt: string }[];
+  screenshots: { src: string; alt: string; width?: number; height?: number }[];
+  imageAlt?: string;
+  imageCaption?: string;
+  video?: string;
   demo: string;
   github: string;
   privateRepo?: boolean;
@@ -51,26 +62,48 @@ export const projects: Project[] = [
     ...defaults,
     slug: "ai-receptionist",
     name: "AI Receptionist",
-    categories: ["AI Automation"],
+    subtitle: "Customer Support & Appointment Automation",
+    teaser: "An invite-only website assistant for enquiries and appointments.",
+    categories: ["Automation"],
     context: "Invite-only portfolio demo",
     featured: true,
     summary:
-      "A website assistant that answers service questions, captures leads, and manages appointments across Google Calendar and Sheets.",
-    stack: ["n8n", "Google Calendar", "Google Sheets", "Email", "Web Voice"],
+      "An AI-powered website assistant that answers business questions, captures leads, and manages appointments through conversational chat and voice input.",
+    stack: [
+      "n8n",
+      "OpenAI",
+      "Google Sheets",
+      "Google Calendar",
+      "Gmail",
+      "Vercel",
+    ],
     problem:
-      "Service businesses lose time answering repeat questions and moving booking details between disconnected tools.",
+      "Service businesses often handle the same questions repeatedly and coordinate appointments through multiple messages. Customer details, booking requests, and calendar updates can become scattered across conversations and spreadsheets.",
     solution:
-      "An invite-only website demo that connects guided conversations with lead capture, calendar availability, booking notifications, and verified booking changes.",
+      "The website connects visitors to an AI agent powered by n8n. Dedicated tools retrieve service information, save leads, check calendar availability, and book appointments.",
     features: [
-      "Business services and FAQ answers",
-      "Lead capture into Google Sheets",
-      "Google Calendar availability checks and appointment booking",
-      "Booking notification emails",
+      "Business information and FAQs from Google Sheets",
+      "Confirmed lead capture into Google Sheets",
+      "Google Calendar availability checks and 30-minute discovery calls",
+      "Owner email notifications for qualifying new bookings",
       "Email-code verification for rescheduling and cancellation",
       "Website voice input and reply read-aloud",
-      "Invite-only access",
+      "Owner-approved, invite-only access",
     ],
     visual: "receptionist",
+    image: "/images/projects/ai-receptionist.webp",
+    imageAlt:
+      "Nova Digital AI Receptionist: services introduction and chat panel with voice controls, captured in disconnected demo mode",
+    imageCaption: "Actual interface · disconnected demo capture",
+    screenshots: [
+      {
+        src: "/images/projects/ai-receptionist-full.webp",
+        alt: "Existing local QA capture of the Nova Digital receptionist page with example greeting, services and voice controls; backend disconnected",
+        width: 1440,
+        height: 2315,
+      },
+    ],
+    github: "https://github.com/Hammad-Tauqir/Ai-Receptionist",
     challenges:
       "The workflow coordinates several business tools while keeping booking changes protected by email-code verification.",
     learned:
@@ -80,108 +113,279 @@ export const projects: Project[] = [
     ...defaults,
     slug: "devlog",
     name: "DevLog",
+    teaser:
+      "Track development work, manage projects, and generate daily reports.",
     categories: ["Full Stack"],
     context: "Personal project",
+    statusLabel: "Completed · Live on Vercel",
     featured: true,
     summary:
-      "A focused space for developers to record progress, track consistency, and turn daily work into meaningful AI-powered reports.",
+      "A developer journal for tracking daily progress, managing projects, maintaining coding streaks, and preparing end-of-day reports. Deployed on Vercel.",
     stack: ["Next.js", "TypeScript", "Prisma", "MySQL", "JWT", "Tailwind CSS"],
     problem:
-      "Daily development work is easy to forget and difficult to summarize after weeks of progress.",
+      "Development updates spread across commits, projects, and notes make daily progress difficult to review and end-of-day reporting time-consuming.",
     solution:
-      "DevLog brings logs, streaks, dashboard totals, and AI-generated reports into one clear workflow.",
+      "DevLog brings project tracking, daily logs, coding streaks, and report generation into one developer workspace.",
     features: [
-      "Secure JWT and cookie-based authentication",
+      "Email and password account creation and sign-in",
       "Daily development logs with CRUD operations",
-      "Streak and activity tracking",
-      "Dashboard statistics",
-      "AI-generated progress reports",
+      "Project management and coding streak tracking",
+      "Dashboard activity statistics",
+      "Daily report generation",
       "Pagination",
       "Resource-based authorization",
     ],
     visual: "devlog",
+    image: "/images/projects/devlog-signup.webp",
+    imageAlt:
+      "DevLog live sign-up screen with reporting introduction and account form",
+    screenshots: [
+      {
+        src: "/images/projects/devlog-homepage.webp",
+        alt: "DevLog deployed homepage with Log In and Create an Account links",
+        width: 1440,
+        height: 900,
+      },
+      {
+        src: "/images/projects/devlog-signup.webp",
+        alt: "DevLog sign-up page with name, email, and password fields and daily reporting introduction",
+        width: 1440,
+        height: 900,
+      },
+    ],
+    demo: "https://dev-log-teal.vercel.app/",
+    outcome:
+      "The app is live on Vercel. Its public landing and account pages are available without signing in; the developer workspace requires an account.",
   },
   {
     ...defaults,
     slug: "polymath-kids",
     name: "Polymath Kids",
+    teaser: "Online courses and hands-on learning programs for children.",
     categories: ["Full Stack"],
     context: "Final-year project",
     featured: true,
     summary:
-      "An e-learning platform connecting educational content, student journeys, and business operations. Built as my final-year project.",
+      "An education platform helping children build 21st-century skills through online courses, hands-on activities, competitions, and school programs. Built as my final-year project.",
     stack: ["React.js", "Node.js", "Express.js", "MySQL"],
     problem:
-      "Managing educational content, students, and payments across separate systems creates extra work.",
+      "Families and schools need a clear way to discover age-appropriate learning opportunities that build practical skills beyond the classroom.",
     solution:
-      "A unified e-learning experience with course management, CRM integration, and local payment flows.",
+      "Polymath Kids presents skill-based courses, seasonal programs, competitions, and school partnerships in one learning experience.",
     features: [
-      "Course and student management",
-      "CRM integration",
-      "EasyPaisa integration",
-      "JazzCash integration",
-      "Responsive learning interface",
+      "STEAM courses with hands-on science, technology, engineering, arts, and math activities",
+      "Summer and winter camps with creative learning programs",
+      "Competitions that encourage problem-solving and teamwork",
+      "Structured 21st-century skills programs for schools",
+      "One-on-one and group academic tutoring",
     ],
     visual: "polymath",
+    image: "/images/projects/polymath-kids-homepage.webp",
+    imageAlt:
+      "Polymath Kids homepage showing the 21st-century skills introduction and registration button",
+    screenshots: [
+      {
+        src: "/images/projects/polymath-kids-homepage.webp",
+        alt: "Polymath Kids homepage with course introduction, registration button, and student illustrations",
+        width: 1440,
+        height: 900,
+      },
+      {
+        src: "/images/projects/polymath-kids-offerings.webp",
+        alt: "Polymath Kids offerings showing STEAM courses, seasonal camps, competitions, and school programs",
+        width: 1440,
+        height: 900,
+      },
+    ],
+    demo: "https://www.polymath-kids.com/",
   },
   {
     ...defaults,
-    slug: "metaviz-landing",
-    name: "Mobile App Lead Platform",
-    categories: ["Frontend", "Full Stack"],
-    context: "MetaViz Studio work",
+    slug: "mobile-app-marketing-lead-capture",
+    name: "MetaViz Mobile App Landing Website",
+    projectType: "Frontend Development · Team Project",
+    role: "Frontend Developer contributing to an existing Next.js application. I extended app showcase components and content, improved lead-form interactions, and preserved campaign context across the booking journey.",
+    teaser:
+      "A landing site for native Brilliant Directories apps, with app examples and two enquiry paths.",
+    categories: ["Frontend"],
+    context: "Team project",
+    statusLabel: "Implemented · some updates on a feature branch",
     featured: true,
     professional: true,
-    privateRepo: true,
     summary:
-      "A responsive mobile app landing and lead-generation platform connecting appointments, CRM, and conversion tracking at MetaViz Studio.",
-    stack: [
-      "Next.js",
-      "TypeScript",
-      "Tailwind CSS",
-      "GoHighLevel",
-      "Meta Pixel",
-    ],
+      "MetaViz's marketing site explains its native iOS and Android apps for Brilliant Directories owners, showcases shipped apps and the self-serve portal, and guides visitors toward an app plan or free app design. I contributed selected frontend and lead-capture improvements to the existing team project.",
+    stack: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS v4"],
     problem:
-      "Campaign visitors need a clear path from discovery to inquiry and appointment booking.",
+      "Directory owners need to understand how their existing Brilliant Directories site would work as a native app, see real app examples, and choose a clear enquiry path. App showcases, forms, and booking navigation needed to support that journey.",
     solution:
-      "A landing and lead-generation platform with connected booking, CRM, and conversion tracking.",
+      "I improved app showcase layouts, screenshot and video presentation, store-download sections, lead-form feedback, and campaign-aware navigation within the existing team-built site.",
     features: [
-      "Responsive landing pages",
-      "GoHighLevel CRM integration",
-      "Appointment booking",
-      "Lead-generation workflow",
-      "Meta Pixel conversion tracking",
+      {
+        title: "App screenshot presentation",
+        description:
+          "Built responsive, optional CSS phone frames for raw screenshots without adding duplicate frames to images that already include device mockups.",
+      },
+      {
+        title: "Demo-video sections",
+        description:
+          "Added individual video sections with preview images and alternating layouts to make app demonstrations easier to explore.",
+      },
+      {
+        title: "Store download layouts",
+        description:
+          "Built separate Google Play and App Store blocks with store links and consistently framed listing screenshots.",
+      },
+      {
+        title: "Lead-form experience",
+        description:
+          "Added accessible per-field validation, aligned frontend email validation with the server, and implemented a dismissible success popup using a portal.",
+      },
+      {
+        title: "Campaign-aware navigation",
+        description:
+          "Preserved the campaign parameter through application, booking, and confirmation pages so visitors can return to the correct originating page.",
+      },
+      {
+        title: "Project content",
+        description:
+          "Added and refined project entries, verified app-store links, and extended typed content without directly editing generated files.",
+      },
     ],
+    technicalHighlights: [
+      "Data-driven optional sections support different project layouts through typed content.",
+      "Percentage-based CSS phone frames scale across cards and larger screenshot views.",
+      "A portal keeps the success overlay outside transformed animation containers.",
+      "Consistent image aspect ratios align store screenshots.",
+      "Return navigation uses known campaign values.",
+    ],
+    existingIntegrations:
+      "GoHighLevel CRM and Meta Pixel were existing site integrations built by teammates; I did not implement them.",
+    outcome:
+      "Implemented improvements to project presentation, form feedback, and booking navigation. Some recent content and store-screenshot additions remain on a feature branch, so this project does not imply that every update is merged, deployed, or live.",
+    attribution:
+      "This was a team project. The original site design, core app showcase system, admin CMS, booking API/calendar, and existing marketing integrations were built by teammates. This page describes only my contribution.",
     visual: "metaviz",
+    image: "/images/projects/metaviz-app-screens.webp",
+    imageAlt:
+      "MetaViz app showcase displaying a range of branded mobile screens",
+    screenshots: [
+      {
+        src: "/images/projects/metaviz-case-studies-cards.webp",
+        alt: "MetaViz case studies showing search filters and cards for Splandidebiz, SOIF, and USBusinessOnline",
+        width: 1910,
+        height: 825,
+      },
+      {
+        src: "/images/projects/metaviz-app-screens.webp",
+        alt: "MetaViz app showcase with a fan of branded mobile app screens",
+        width: 1910,
+        height: 900,
+      },
+      {
+        src: "/images/projects/metaviz-splandidebiz-video.webp",
+        alt: "Splandidebiz case study showing the app demonstration video and project details",
+        width: 1910,
+        height: 650,
+      },
+    ],
+    demo: "https://app.metaviz.io/",
   },
   {
     ...defaults,
-    slug: "banking-app",
-    name: "Banking Management App",
-    categories: ["Mobile"],
-    context: "Android application",
+    slug: "design-review-client-feedback",
+    name: "Design Review & Client Feedback Platform",
+    projectType: "Full-Stack Development · Team Project",
+    role: "Full-Stack Developer on an existing team-built product. I implemented team access, client analytics, review-canvas interactions, screen updates, and capture improvements across the interface and backend.",
+    teaser:
+      "Contributed team roles, visitor insights, canvas tools, and screen-update workflows to a design review platform.",
+    categories: ["Full Stack"],
+    context: "Team project",
     featured: false,
+    professional: true,
     summary:
-      "An Android application for user account management and transaction workflows.",
-    stack: ["Java", "XML", "Android Studio", "Firebase"],
-    problem:
-      "Users need a straightforward mobile interface for essential account and transaction actions.",
-    solution:
-      "A native Android interface connected to Firebase for account and transaction data.",
-    features: [
-      "User authentication",
-      "Account management",
-      "Transaction management",
-      "Firebase data storage",
+      "MetaViz Studio lets teams upload ZIP or HTML design exports, organize screens into review rounds, and collect client comments on a visual canvas. I contributed full-stack features to the existing product, focusing on team access, visitor insights, screen updates, and canvas usability. The live site requires sign-in to view projects.",
+    stack: [
+      "Next.js 14",
+      "React 18",
+      "TypeScript",
+      "PostgreSQL",
+      "Prisma",
+      "Playwright / Chromium",
+      "Nodemailer",
+      "Docker",
     ],
-    visual: "banking",
+    problem:
+      "Design feedback can become scattered across messages and screenshots. Teams need a central place to review designs, understand visitor engagement, update individual screens, and manage access to projects.",
+    solution:
+      "I extended the existing product with role-based team access, visitor insights, smoother canvas interactions, screen replacement across review rounds, and more reliable design capture.",
+    features: [
+      {
+        title: "Team accounts & permissions",
+        description:
+          "Implemented super admin, manager, and member roles; email invitations; a super-admin 'Login as' tool; and transfers of projects between managers' teams.",
+      },
+      {
+        title: "Client visits & heatmaps",
+        description:
+          "Added name-and-email entry before a shared review opens, then recorded visits, clicks, and time spent on each screen. Built per-screen click heatmaps. Entered email addresses are self-declared, not verified.",
+      },
+      {
+        title: "Review canvas interactions",
+        description:
+          "Kept comment pins the same visual size while zooming, added hover previews and count badges for grouped pins, improved mouse-wheel zoom and pan, added board-wide Ctrl+F search, and made side panels collapsible for a wider canvas.",
+      },
+      {
+        title: "Screen updates across rounds",
+        description:
+          "Enabled selected screens to be replaced in the current round or carried into a new one. Wrote a repair script to reconnect comments that had become detached from their original screens.",
+      },
+      {
+        title: "More reliable design capture",
+        description:
+          "Fixed cut-off phone frames and inaccurate screen bounds, supported artboards with different shapes, and grouped captured screens into sections.",
+      },
+    ],
+    technicalHighlights: [
+      "Board-wide Ctrl+F finds text across screen iframes and moves the canvas to a result without disturbing comment anchors.",
+      "Comment pins remain readable at different zoom levels and collapse into count badges when crowded.",
+      "A repair script restores comment-to-screen associations after screen updates.",
+      "Capture sizing accounts for device frames and varied artboard shapes instead of clipping their edges.",
+    ],
+    outcome:
+      "Delivered team-management, visitor-insight, canvas, screen-update, and capture improvements for the existing product. No usage or impact metrics are claimed.",
+    attribution:
+      "This was a team-built product. My contribution was the features described here; the original platform and its core review infrastructure were built by the team.",
+    visual: "design-review",
+    image: "/images/projects/design-review-dashboard.png",
+    imageAlt:
+      "MetaViz Studio dashboard with a project grid and design-export upload area",
+    screenshots: [
+      {
+        src: "/images/projects/design-review-dashboard.png",
+        alt: "MetaViz Studio dashboard showing the project grid and ZIP or HTML upload area",
+        width: 3200,
+        height: 2000,
+      },
+      {
+        src: "/images/projects/design-review-canvas.png",
+        alt: "MetaViz Studio review canvas with mobile screens, numbered comment pins, an open comment, and the comments sidebar",
+        width: 3200,
+        height: 2000,
+      },
+      {
+        src: "/images/projects/design-review-analytics.png",
+        alt: "MetaViz Studio visitor analytics with visits, clicks, viewing time, and per-screen activity cards",
+        width: 3200,
+        height: 4450,
+      },
+    ],
+    demo: "https://mockup.metaviz.pro/",
   },
   {
     ...defaults,
     slug: "email-automation",
     name: "Smart Email Workflow",
-    categories: ["AI Automation"],
+    categories: ["Automation"],
     context: "Workflow in development",
     status: "In Progress",
     summary:
@@ -201,7 +405,7 @@ export const projects: Project[] = [
     ...defaults,
     slug: "order-management",
     name: "Google Sheets Order Management",
-    categories: ["AI Automation"],
+    categories: ["Automation"],
     context: "Workflow in development",
     status: "In Progress",
     summary:

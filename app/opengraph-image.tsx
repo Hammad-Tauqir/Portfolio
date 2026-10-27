@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { site } from "@/config/site";
 export const alt =
-  "Hammad Tauqir — Full-Stack Developer and AI Automation Developer";
+  "Hammad Tauqir — Full-Stack Developer and Automation Builder";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export default function OpenGraphImage() {

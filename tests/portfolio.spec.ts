@@ -11,9 +11,9 @@ test("four page layouts render without overflow or browser errors", async ({
     [
       "home",
       "/",
-      "I build websites and AI automations that make business easier.",
+      "I build websites and automations that make business easier.",
     ],
-    ["projects", "/projects", "Work built around real needs."],
+    ["projects", "/projects", "Explore the projects."],
     ["detail", "/projects/devlog", "DevLog."],
     ["contact", "/contact", "Let’s build something genuinely useful."],
   ]) {
@@ -47,18 +47,26 @@ test("filters include multi-category work and unfinished projects", async ({
 }) => {
   await page.goto("/projects");
   await expect(page.locator(".workcard")).toHaveCount(7);
-  await page
-    .getByRole("button", { name: "AI Automation", exact: true })
-    .click();
+  await expect(page.getByText("Banking Management App")).toHaveCount(0);
+  await expect(
+    page.getByRole("button", { name: "Mobile", exact: true }),
+  ).toHaveCount(0);
+  await page.getByRole("button", { name: "Automation", exact: true }).click();
   await expect(page.locator(".workcard")).toHaveCount(3);
   await expect(page.locator(".progress-status")).toHaveCount(2);
   await page.getByRole("button", { name: "Full Stack", exact: true }).click();
   await expect(page.locator(".workcard")).toHaveCount(3);
+  await expect(
+    page.getByText("MetaViz Mobile App Landing Website"),
+  ).toHaveCount(0);
   await page.getByRole("button", { name: "Frontend", exact: true }).click();
   await expect(page.locator(".workcard")).toHaveCount(1);
-  await page.getByRole("button", { name: "Mobile", exact: true }).click();
-  await expect(page.locator(".workcard")).toHaveCount(1);
-  await page.getByRole("button", { name: "All work", exact: true }).click();
+  await expect(
+    page.getByText("MetaViz Mobile App Landing Website"),
+  ).toBeVisible();
+  await page
+    .getByRole("button", { name: "All projects", exact: true })
+    .click();
   await expect(page.locator(".workcard")).toHaveCount(7);
 });
 test("navigation works across routes", async ({ page, isMobile }) => {
@@ -81,38 +89,45 @@ test("navigation works across routes", async ({ page, isMobile }) => {
     ).toBeFocused();
   }
 });
-test("contact validates and never pretends an unconfigured message was sent", async ({
+test("contact is honest and never sends a message during testing", async ({
   page,
 }) => {
-  await page.goto("/contact");
-  await page.getByRole("button", { name: "Send message" }).click();
-  await expect(page.getByLabel("YOUR NAME")).toHaveAttribute(
-    "aria-invalid",
-    "true",
-  );
-  await page.getByLabel("YOUR NAME").fill("Test Visitor");
-  await page.getByLabel("EMAIL ADDRESS").fill("visitor@example.com");
-  await page.getByLabel("SUBJECT", { exact: true }).fill("Portfolio inquiry");
-  await page
-    .getByLabel("YOUR MESSAGE")
-    .fill("I would like to discuss a development project.");
   let requests = 0;
-  page.on("request", (request) => {
-    if (request.method() === "POST") requests++;
+  await page.route("**/*", async (route) => {
+    if (route.request().method() === "POST") {
+      requests++;
+      await route.abort();
+      return;
+    }
+    await route.continue();
   });
-  await page.getByRole("button", { name: "Send message" }).click();
-  await expect(page.getByRole("status")).toContainText(
-    "Your message has not been sent",
-  );
+  await page.goto("/contact");
+  await expect(page.locator("form")).toHaveCount(0);
+  await expect(
+    page.locator('.contact-options a[href="https://github.com/Hammad-Tauqir"]'),
+  ).toBeVisible();
+  if (await page.locator('.contact-options a[href^="mailto:"]').count()) {
+    await expect(
+      page.locator('.contact-options a[href^="mailto:"]'),
+    ).toBeVisible();
+  } else {
+    await expect(page.locator(".contact-pending")).toContainText(
+      "not available yet",
+    );
+  }
+  await page.goto("/projects/ai-receptionist");
+  await page.getByRole("link", { name: "Request Demo Access" }).click();
+  await expect(page).toHaveURL(/\/#contact$/);
+  await expect(page.locator("#contact .contact-options")).toBeVisible();
   expect(requests).toBe(0);
 });
-test("every case study and custom 404 resolve", async ({ page }) => {
+test("every project and custom 404 resolve", async ({ page }) => {
   for (const slug of [
     "ai-receptionist",
     "devlog",
     "polymath-kids",
-    "metaviz-landing",
-    "banking-app",
+    "mobile-app-marketing-lead-capture",
+    "design-review-client-feedback",
     "email-automation",
     "order-management",
   ]) {
@@ -121,9 +136,240 @@ test("every case study and custom 404 resolve", async ({ page }) => {
     await expect(
       page.getByRole("navigation", { name: "Project navigation" }),
     ).toBeVisible();
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+    await expect(
+      page.getByText("Detailed implementation notes will be added", {
+        exact: false,
+      }),
+    ).toHaveCount(0);
   }
+  await page.goto("/projects/banking-app");
+  await expect(
+    page.getByRole("heading", { name: "Nothing here yet." }),
+  ).toBeVisible();
   await page.goto("/projects/missing-project");
   await expect(
     page.getByRole("heading", { name: "Nothing here yet." }),
   ).toBeVisible();
+});
+
+test("team design-review project stays attributed and private", async ({
+  page,
+}, testInfo) => {
+  await page.goto("/projects");
+  const card = page.getByRole("link", {
+    name: "View details for Design Review & Client Feedback Platform",
+  });
+  await expect(card).toContainText("Contributed team roles, visitor insights");
+  await card.click();
+  await expect(page).toHaveURL(/\/projects\/design-review-client-feedback$/);
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(
+    "Design Review & Client Feedback Platform",
+  );
+  for (const heading of [
+    "My role",
+    "Main contributions",
+    "Technical highlights",
+    "Outcome",
+    "Screenshots",
+  ]) {
+    await expect(page.getByRole("heading", { name: heading })).toBeVisible();
+  }
+  for (const contribution of [
+    "Team accounts & permissions.",
+    "Client visits & heatmaps.",
+    "Review canvas interactions.",
+    "Screen updates across rounds.",
+    "More reliable design capture.",
+  ]) {
+    await expect(page.getByText(contribution, { exact: true })).toBeVisible();
+  }
+  await expect(page.locator(".case-attribution")).toContainText(
+    "team-built product",
+  );
+  await expect(
+    page.getByText("self-declared, not verified", { exact: false }),
+  ).toBeVisible();
+  await expect(page.locator(".preview .illustration-label")).toHaveCount(0);
+  await expect(page.locator(".case-hero img")).toHaveCount(1);
+  const designScreenshots = page.locator(".screenshots img");
+  await expect(designScreenshots).toHaveCount(3);
+  for (const [index, image, height] of [
+    [0, "design-review-dashboard.png", "2000"],
+    [1, "design-review-canvas.png", "2000"],
+    [2, "design-review-analytics.png", "4450"],
+  ] as const) {
+    await expect(designScreenshots.nth(index)).toHaveAttribute(
+      "src",
+      new RegExp(image),
+    );
+    await expect(designScreenshots.nth(index)).toHaveAttribute("width", "3200");
+    await expect(designScreenshots.nth(index)).toHaveAttribute("height", height);
+  }
+  await expect(
+    page.locator('.project-links a[href="https://mockup.metaviz.pro/"]'),
+  ).toHaveCount(1);
+  await expect(page.getByText("Sign-in required to view projects.")).toBeVisible();
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await page.screenshot({
+    path: testInfo.outputPath("design-review.png"),
+    fullPage: true,
+    animations: "disabled",
+  });
+});
+
+test("project thumbnails fill their cards while screenshots keep their proportions", async ({
+  page,
+}) => {
+  await page.goto("/projects");
+  const thumbnails = page.locator(".workcard .project-image");
+  expect(await thumbnails.count()).toBeGreaterThan(0);
+  for (const thumbnail of await thumbnails.all()) {
+    await expect(thumbnail).toHaveCSS("object-fit", "cover");
+  }
+
+  await page.goto("/projects/mobile-app-marketing-lead-capture");
+  const screenshots = page.locator(".screenshots img");
+  await expect(screenshots).toHaveCount(3);
+  for (const screenshot of await screenshots.all()) {
+    await screenshot.scrollIntoViewIfNeeded();
+    await expect.poll(() => screenshot.evaluate((image) => (image as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
+    const dimensions = await screenshot.evaluate((image) => {
+      const img = image as HTMLImageElement;
+      return {
+        rendered: img.getBoundingClientRect().width / img.getBoundingClientRect().height,
+        natural: img.naturalWidth / img.naturalHeight,
+      };
+    });
+    expect(Math.abs(dimensions.rendered - dimensions.natural)).toBeLessThan(0.02);
+  }
+});
+
+test("mobile app marketing project updates the existing team project", async ({
+  page,
+}, testInfo) => {
+  await page.goto("/projects");
+  await expect(page.getByText("Mobile App Lead Platform")).toHaveCount(0);
+  const card = page.getByRole("link", {
+    name: "View details for MetaViz Mobile App Landing Website",
+  });
+  await expect(card).toHaveCount(1);
+  await expect(card).toContainText(
+    "A landing site for native Brilliant Directories apps",
+  );
+  await card.click();
+  await expect(page).toHaveURL(
+    /\/projects\/mobile-app-marketing-lead-capture$/,
+  );
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(
+    "MetaViz Mobile App Landing Website",
+  );
+  await expect(
+    page.getByText("Frontend Development · Team Project"),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Implemented · some updates on a feature branch"),
+  ).toBeVisible();
+  for (const heading of [
+    "My role",
+    "Main contributions",
+    "Technical highlights",
+    "Existing site integrations",
+    "Outcome",
+    "Screenshots",
+  ]) {
+    await expect(page.getByRole("heading", { name: heading })).toBeVisible();
+  }
+  await expect(
+    page.getByText(
+      "Some recent content and store-screenshot additions remain on a feature branch",
+      { exact: false },
+    ),
+  ).toBeVisible();
+  await expect(page.locator(".case-attribution")).toContainText(
+    "built by teammates",
+  );
+  await expect(page.locator(".screenshots img")).toHaveCount(3);
+  await expect(
+    page.locator('.project-links a[href="https://app.metaviz.io/"]'),
+  ).toHaveCount(1);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await page.screenshot({
+    path: testInfo.outputPath("mobile-app-marketing.png"),
+    fullPage: true,
+    animations: "disabled",
+  });
+  await page.goto("/projects/metaviz-landing");
+  await expect(page).toHaveURL(
+    /\/projects\/mobile-app-marketing-lead-capture$/,
+  );
+});
+
+test("project archive keeps cards short and links to full details", async ({
+  page,
+}, testInfo) => {
+  await page.goto("/");
+  await page.evaluate(() => document.fonts.ready);
+  await expect(page.locator(".workcard")).toHaveCount(0);
+  const navigation = page.getByRole("navigation", { name: "Main navigation" });
+  if (testInfo.project.name === "mobile") {
+    await page.getByRole("button", { name: "Open navigation" }).click();
+  }
+  await navigation.getByRole("link", { name: "Projects" }).click();
+  await expect(page).toHaveURL(/\/projects$/);
+  await expect(page.locator(".case-study-grid .workcard")).toHaveCount(7);
+  if (testInfo.project.name === "desktop") {
+    await expect(
+      page.locator(".case-study-grid .workcard").first(),
+    ).toBeInViewport();
+  }
+  await page.locator(".case-study-grid").screenshot({
+    path: testInfo.outputPath("case-studies-grid.png"),
+    style: ".site-header, .skip-link { visibility: hidden !important; }",
+  });
+  const image = page.locator(".case-study-grid img").first();
+  await expect(image).toBeVisible();
+  expect(
+    await image.evaluate((el) => (el as HTMLImageElement).naturalWidth),
+  ).toBeGreaterThan(0);
+  await page.locator(".case-study-grid .workcard").first().click();
+  await expect(page).toHaveURL(/\/projects\/ai-receptionist$/);
+  await expect(
+    page.getByRole("heading", { name: "The problem" }),
+  ).toBeVisible();
+  for (const heading of [
+    "The solution",
+    "Key features",
+    "How it works",
+    "Workflow architecture",
+    "My contribution",
+    "Key engineering decisions",
+    "Outcome & scope",
+  ]) {
+    await expect(page.getByRole("heading", { name: heading })).toBeVisible();
+  }
+  await expect(page.locator(".case-workflows > div")).toHaveCount(3);
+  await expect(
+    page.getByText("Full-Stack Development & Automation"),
+  ).toBeVisible();
+  await expect(page.getByRole("link", { name: "Watch Demo" })).toHaveCount(0);
+  await expect(
+    page.getByRole("heading", { name: "Screenshots" }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: testInfo.outputPath("receptionist.png"),
+    fullPage: true,
+  });
 });

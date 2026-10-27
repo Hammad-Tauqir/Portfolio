@@ -38,7 +38,7 @@ export const skills = [
     icon: "automation",
     items: [
       "n8n",
-      "AI workflow automation",
+      "Workflow automation",
       "AI agents",
       "Email automation",
       "Google Sheets automation",

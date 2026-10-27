@@ -2,12 +2,7 @@ import { Download, ExternalLink } from "lucide-react";
 import { Github, Linkedin } from "./social-icons";
 import { site } from "@/config/site";
 export function CvLink({ compact = false }: { compact?: boolean }) {
-  if (!site.cv)
-    return (
-      <span className={compact ? "cv-unavailable compact" : "cv-unavailable"}>
-        <Download size={14} aria-hidden="true" /> CV coming soon
-      </span>
-    );
+  if (!site.cv) return null;
   return (
     <a href={site.cv} download className={compact ? "navcta" : "btn secondary"}>
       <Download size={15} aria-hidden="true" /> Download CV
@@ -28,17 +23,7 @@ export function SocialLinks() {
             {name}
             <span className="sr-only"> (opens in a new tab)</span>
           </a>
-        ) : (
-          <span
-            key={name}
-            className="unavailable"
-            title={`${name} URL to be added`}
-          >
-            <Icon size={15} aria-hidden="true" />
-            {name}
-            <small>to be added</small>
-          </span>
-        ),
+        ) : null,
       )}
     </div>
   );

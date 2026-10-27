@@ -1,19 +1,19 @@
 /** All personal placeholders live here. Empty strings never render as fake links. */
 export const site = {
   name: "Hammad Tauqir",
-  title: "Full-Stack Developer | AI Automation Developer",
+  title: "Full-Stack Developer | Automation Builder",
   location: "Lahore, Pakistan",
   availability: "Open to Opportunities",
   intro:
-    "Full-stack developer building polished websites, practical applications, and AI automations with Next.js, Node.js, and n8n.",
+    "Full-stack developer building polished websites, practical applications, and useful business automations.",
   heroIntro:
-    "I’m Hammad, a full-stack developer in Lahore. I design and build clear web experiences, connected business tools, and practical n8n workflows—from the first screen to the systems behind it.",
+    "I’m Hammad, a full-stack developer in Lahore. I design and build clear web experiences, connected business tools, and practical automations—from the first screen to the systems behind it.",
   about: [
     "I'm a Computer Science graduate from FAST-NUCES with hands-on experience building full-stack applications. At MetaViz Studio, I worked on responsive Next.js experiences and connected marketing tools with booking and lead workflows.",
-    "I work with Next.js, React, Node.js, Django, Prisma and relational databases. My interests now also include AI automation: finding repetitive business tasks and turning them into clear, reviewable workflows with n8n. I am interested in full-stack, backend and AI automation opportunities.",
+    "I work with Next.js, React, Node.js, Django, Prisma and relational databases. My interests also include automation: finding repetitive business tasks and turning them into clear, reviewable workflows. I am interested in full-stack, backend and automation opportunities.",
   ],
   email: "", // TODO: Add professional email
-  github: "", // TODO: Add GitHub URL
+  github: "https://github.com/Hammad-Tauqir",
   linkedin: "", // TODO: Add LinkedIn URL
   upwork: "", // TODO: Add Upwork URL
   cv: "", // TODO: Add CV file to public/documents/hammad-tauqir-cv.pdf, then set '/documents/hammad-tauqir-cv.pdf'
