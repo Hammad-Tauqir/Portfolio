@@ -106,7 +106,10 @@ test("contact form preview is visible and does not send", async ({
   await expect(form).toBeVisible();
   await expect(form.getByLabel("Your name *")).toBeVisible();
   await expect(form.getByLabel("Email address *")).toBeVisible();
-  await expect(form.getByLabel("What do you need? *")).toBeVisible();
+  await expect(form.getByLabel("What do you need? (optional)")).toBeVisible();
+  await expect(form.getByLabel("Timeline")).toHaveCount(0);
+  await expect(form.getByLabel("Budget range")).toHaveCount(0);
+  await expect(form.getByLabel("Existing website or reference link")).toHaveCount(0);
   await expect(form.getByLabel("Tell me about your project *")).toBeVisible();
   await expect(form.getByRole("button", { name: /Send enquiry/ })).toBeDisabled();
   await expect(page.getByText("This form is a preview and does not submit yet.", { exact: false })).toBeVisible();

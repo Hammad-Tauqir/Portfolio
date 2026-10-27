@@ -19,38 +19,16 @@ export function ContactForm() {
             <input id="contact-email" name="email" type="email" autoComplete="email" required maxLength={254} placeholder="you@example.com" />
           </div>
         </div>
-        <div className="formrow">
-          <div>
-            <label htmlFor="contact-type">What do you need? *</label>
-            <select id="contact-type" name="projectType" required defaultValue="">
-              <option value="" disabled>Select a service</option>
-              <option>Website</option>
-              <option>Web app</option>
-              <option>Automation</option>
-              <option>AI assistant</option>
-              <option>Something else</option>
-            </select>
-          </div>
-          <div>
-            <label htmlFor="contact-timeline">Timeline</label>
-            <select id="contact-timeline" name="timeline" defaultValue="">
-              <option value="">Not sure yet</option>
-              <option>As soon as possible</option>
-              <option>Within 1 month</option>
-              <option>Within 3 months</option>
-              <option>Flexible</option>
-            </select>
-          </div>
-        </div>
-        <div className="formrow">
-          <div>
-            <label htmlFor="contact-budget">Budget range</label>
-            <input id="contact-budget" name="budget" maxLength={80} placeholder="Optional" />
-          </div>
-          <div>
-            <label htmlFor="contact-link">Existing website or reference link</label>
-            <input id="contact-link" name="referenceLink" type="url" maxLength={500} placeholder="https://example.com" />
-          </div>
+        <div>
+          <label htmlFor="contact-type">What do you need? (optional)</label>
+          <select id="contact-type" name="projectType" defaultValue="">
+            <option value="">Select a service</option>
+            <option>Website</option>
+            <option>Web app</option>
+            <option>Automation</option>
+            <option>AI assistant</option>
+            <option>Something else</option>
+          </select>
         </div>
         <div>
           <label htmlFor="contact-message">Tell me about your project *</label>

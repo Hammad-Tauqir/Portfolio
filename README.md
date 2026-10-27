@@ -78,7 +78,7 @@ The default Open Graph image is generated locally using the portfolio's colors a
 
 ## Contact form
 
-The enquiry form preview appears on Home and `/contact`. It collects name, email, project type and project description, plus optional timeline, budget and reference link. Email sending has deliberately not been connected yet. The submit button is disabled and the page says clearly that no message is sent. Backend delivery and spam protection can be added later.
+The enquiry form preview appears on Home and `/contact`. It collects name, email and project description, with an optional project type. Email sending has deliberately not been connected yet. The submit button is disabled and the page says clearly that no message is sent. Backend delivery and spam protection can be added later.
 
 ## Environment and SEO
 

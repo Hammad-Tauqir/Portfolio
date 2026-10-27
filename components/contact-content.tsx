@@ -9,7 +9,7 @@ export function ContactContent() {
       <span className="eyebrow">PROJECTS · OPPORTUNITIES · DEMO ACCESS</span>
       <h2>Let’s talk about your next build.</h2>
       <p>
-        Share what you want to build, the tools you use, and your timeline. For
+        Share what you want to build and how I can help. For
         AI Receptionist access, mention that you would like to try the portfolio
         demo.
       </p>
