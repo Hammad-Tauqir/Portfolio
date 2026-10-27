@@ -9,8 +9,8 @@ export const site = {
   heroIntro:
     "I’m Hammad, a full-stack developer in Lahore. I design and build clear web experiences, connected business tools, and practical automations—from the first screen to the systems behind it.",
   about: [
-    "I'm a Computer Science graduate from FAST-NUCES with hands-on experience building full-stack applications. At MetaViz Studio, I worked on responsive Next.js experiences and connected marketing tools with booking and lead workflows.",
-    "I work with Next.js, React, Node.js, Django, Prisma and relational databases. My interests also include automation: finding repetitive business tasks and turning them into clear, reviewable workflows. I am interested in full-stack, backend and automation opportunities.",
+    "I'm a Computer Science graduate from FAST-NUCES with hands-on experience in both web development and AI automation. At MetaViz Studio, I worked on responsive web applications and connected marketing tools with booking and lead workflows.",
+    "I build websites, full-stack applications, and AI-powered workflows for tasks such as answering enquiries, capturing leads, and managing appointments. I'm interested in opportunities where I can contribute across web development and AI automation.",
   ],
   email: "", // TODO: Add professional email
   github: "https://github.com/Hammad-Tauqir",
