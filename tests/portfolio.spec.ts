@@ -253,6 +253,20 @@ test("project thumbnails fill their cards while screenshots keep their proportio
   }
 });
 
+test("academy keeps its logo cover and shows the four supplied interface screenshots", async ({ page }) => {
+  await page.goto("/projects/concept-science-academy");
+  await expect(page.locator(".case-visual .project-image")).toHaveAttribute(
+    "alt",
+    "Concept Science Academy logo used as the project cover",
+  );
+  const screenshots = page.locator(".screenshots img");
+  await expect(screenshots).toHaveCount(4);
+  for (const screenshot of await screenshots.all()) {
+    await screenshot.scrollIntoViewIfNeeded();
+    await expect.poll(() => screenshot.evaluate((image) => (image as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
+  }
+});
+
 test("mobile app marketing project updates the existing team project", async ({
   page,
 }, testInfo) => {

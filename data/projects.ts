@@ -140,8 +140,34 @@ export const projects: Project[] = [
     imageAlt:
       "Concept Science Academy logo used as the project cover",
     imageCaption: "Academy branding · staff-only application",
+    screenshots: [
+      {
+        src: "/images/projects/academy-dashboard.png",
+        alt: "Concept Science Academy dashboard with fictional student counts and monthly fee collection summaries",
+        width: 1918,
+        height: 833,
+      },
+      {
+        src: "/images/projects/academy-students.png",
+        alt: "Academy student directory with search filters and fictional student records",
+        width: 1917,
+        height: 824,
+      },
+      {
+        src: "/images/projects/academy-fee-collection.png",
+        alt: "Academy fee collection view with fictional student payments and balances",
+        width: 1914,
+        height: 828,
+      },
+      {
+        src: "/images/projects/academy-reports.png",
+        alt: "Academy reports view with monthly fee totals, payment statuses, and PDF download",
+        width: 1630,
+        height: 831,
+      },
+    ],
     outcome:
-      "The application has a staff sign-in and permission-gated pages. Student and payment data are kept out of this public portfolio.",
+      "The application has a staff sign-in and permission-gated pages. The screenshots use fictional student data; real student and payment records are not shown publicly.",
   },
   {
     ...defaults,
