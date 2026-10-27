@@ -124,6 +124,30 @@ test("contact form preview is visible and does not send", async ({
   await expect(page.locator("#contact .contact-options")).toBeVisible();
   expect(requests).toBe(0);
 });
+
+test("contact endpoint validates enquiries without claiming delivery", async ({ request }) => {
+  const invalid = await request.post("/api/contact", {
+    data: { name: " ", email: "invalid", projectType: "Unknown", message: "short" },
+  });
+  expect(invalid.status()).toBe(400);
+  expect((await invalid.json()).fields).toEqual({
+    name: expect.any(String),
+    email: expect.any(String),
+    projectType: expect.any(String),
+    message: expect.any(String),
+  });
+
+  const valid = await request.post("/api/contact", {
+    data: {
+      name: "Test Person",
+      email: "test@example.com",
+      projectType: "",
+      message: "I would like to discuss a new website project.",
+    },
+  });
+  expect(valid.status()).toBe(503);
+  expect((await valid.json()).error).toContain("not sent");
+});
 test("every project and custom 404 resolve", async ({ page }) => {
   for (const slug of [
     "ai-receptionist",
