@@ -1307,11 +1307,14 @@ main {
 /* Contact enquiry form */
 .formbox {
   width: 100%;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  background: #151821;
 }
 .formbox form {
   display: grid;
-  gap: 16px;
-  margin-top: 20px;
+  gap: 20px;
 }
 .formrow {
   display: grid;
@@ -1320,20 +1323,21 @@ main {
 }
 .formbox label {
   display: block;
-  margin-bottom: 7px;
-  color: var(--dim);
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
+  margin-bottom: 9px;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
 }
 .formbox input,
 .formbox select,
 .formbox textarea {
   width: 100%;
+  min-height: 52px;
   padding: 13px 15px;
-  border: 1px solid var(--line-2);
+  border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.03);
+  background: #0d1017;
   color: var(--text);
   font: inherit;
   font-size: 14px;
@@ -1350,7 +1354,7 @@ main {
 }
 .formbox input::placeholder,
 .formbox textarea::placeholder {
-  color: var(--dim);
+  color: #aeb5c2;
 }
 .formbox textarea {
   min-height: 140px;
@@ -1361,7 +1365,7 @@ main {
 }
 .contact-submit:disabled {
   cursor: not-allowed;
-  opacity: 0.55;
+  opacity: 0.85;
   box-shadow: none;
 }
 .field-error {
@@ -1370,8 +1374,8 @@ main {
   font-size: 13px;
 }
 .note {
-  color: var(--dim);
-  font-size: 13px;
+  color: var(--muted);
+  font-size: 14px;
 }
 
 /* ==========================================================================
@@ -2302,6 +2306,9 @@ main {
   }
   .formrow {
     grid-template-columns: 1fr;
+  }
+  .formbox {
+    padding: 18px;
   }
 }
 
