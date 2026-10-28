@@ -138,8 +138,8 @@ export const projects: Project[] = [
     ],
     visual: "academy",
     image: "/images/projects/concept-science-academy-logo.png",
-    video: "/videos/concept-science-academy-demo.mp4",
-    videoPoster: "/images/projects/concept-science-academy-demo-poster.webp",
+    video: "/videos/academy-demo-clear-voice.mp4",
+    videoPoster: "/images/projects/academy-demo-clear-voice-poster.webp",
     imageAlt:
       "Concept Science Academy logo used as the project cover",
     imageCaption: "Academy branding · staff-only application",

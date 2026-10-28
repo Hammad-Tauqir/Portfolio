@@ -336,12 +336,12 @@ test("academy keeps its logo cover and shows its demo and screenshots", async ({
   await expect(page).toHaveURL(/\/projects\/concept-science-academy#demo-video$/);
   const video = page.locator("#demo-video video");
   await expect(video).toBeVisible();
-  await expect(video).toHaveAttribute("poster", "/images/projects/concept-science-academy-demo-poster.webp");
+  await expect(video).toHaveAttribute("poster", "/images/projects/academy-demo-clear-voice-poster.webp");
   await expect(video).toHaveAttribute("preload", "metadata");
   await expect(video).toHaveAttribute("playsinline", "");
-  await expect(video.locator("source")).toHaveAttribute("src", "/videos/concept-science-academy-demo.mp4");
-  await expect.poll(() => video.evaluate((element) => (element as HTMLVideoElement).duration)).toBeGreaterThan(65);
-  expect(await video.evaluate((element) => (element as HTMLVideoElement).duration)).toBeLessThan(67);
+  await expect(video.locator("source")).toHaveAttribute("src", "/videos/academy-demo-clear-voice.mp4");
+  await expect.poll(() => video.evaluate((element) => (element as HTMLVideoElement).duration)).toBeGreaterThan(75);
+  expect(await video.evaluate((element) => (element as HTMLVideoElement).duration)).toBeLessThan(77);
   expect(await video.evaluate((element) => (element as HTMLVideoElement).paused)).toBe(true);
   expect(await video.evaluate((element) => (element as HTMLVideoElement).autoplay)).toBe(false);
   expect(await video.evaluate((element) => (element as HTMLVideoElement).controls)).toBe(true);
