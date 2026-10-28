@@ -269,18 +269,22 @@ test("team design-review project stays attributed and private", async ({
   await expect(page.locator(".case-hero img")).toHaveCount(1);
   const designScreenshots = page.locator(".screenshots img");
   await expect(designScreenshots).toHaveCount(3);
-  for (const [index, image, height] of [
-    [0, "design-review-dashboard.png", "2000"],
-    [1, "design-review-canvas.png", "2000"],
-    [2, "design-review-analytics.png", "4450"],
+  for (const [index, image, imageWidth, height] of [
+    [0, "design-review-dashboard.png", "3200", "2000"],
+    [1, "design-review-canvas-demo.png", "1586", "992"],
+    [2, "design-review-analytics-demo.png", "1063", "1479"],
   ] as const) {
     await expect(designScreenshots.nth(index)).toHaveAttribute(
       "src",
       new RegExp(image),
     );
-    await expect(designScreenshots.nth(index)).toHaveAttribute("width", "3200");
+    await expect(designScreenshots.nth(index)).toHaveAttribute("width", imageWidth);
     await expect(designScreenshots.nth(index)).toHaveAttribute("height", height);
+    await designScreenshots.nth(index).scrollIntoViewIfNeeded();
+    await expect.poll(() => designScreenshots.nth(index).evaluate((element) => (element as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
   }
+  expect((await page.request.get("/images/projects/design-review-canvas.png")).status()).toBe(404);
+  expect((await page.request.get("/images/projects/design-review-analytics.png")).status()).toBe(404);
   await expect(
     page.locator('.project-links a[href="https://mockup.metaviz.pro/"]'),
   ).toHaveCount(1);
