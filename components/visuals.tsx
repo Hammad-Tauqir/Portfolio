@@ -87,7 +87,7 @@ export function ProjectVisual({
   sizes?: string;
 }) {
   return (
-    <div className={`preview ${project.visual}`}>
+    <div className={`preview ${project.visual}${project.video ? " video-preview" : ""}`}>
       {project.image ? (
         <>
           <Image

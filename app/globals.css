@@ -901,10 +901,10 @@ main {
 .workcard:hover .project-image {
   transform: scale(1.045);
 }
-.preview.receptionist {
+.preview.video-preview {
   aspect-ratio: 16 / 9;
 }
-.preview.receptionist .project-image {
+.preview.video-preview .project-image {
   object-fit: contain;
   object-position: center;
   transform: none;

@@ -216,8 +216,28 @@ test("team design-review project stays attributed and private", async ({
     name: "View details for Design Review & Client Feedback Platform",
   });
   await expect(card).toContainText("Contributed team roles, visitor insights");
-  await card.click();
-  await expect(page).toHaveURL(/\/projects\/design-review-client-feedback$/);
+  const thumbnail = card.locator("img");
+  await expect(thumbnail).toHaveAttribute("src", /hsvs-design-review-demo-poster/);
+  await thumbnail.scrollIntoViewIfNeeded();
+  await expect.poll(() => thumbnail.evaluate((image) => (image as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
+  await expect(thumbnail).toHaveCSS("object-fit", "contain");
+  const watchDemo = page.locator(".workcard").filter({ has: card }).getByRole("link", { name: "Watch Demo" });
+  await expect(watchDemo).toHaveAttribute("href", "/projects/design-review-client-feedback#demo-video");
+  await watchDemo.click();
+  await expect(page).toHaveURL(/\/projects\/design-review-client-feedback#demo-video$/);
+  const video = page.locator("#demo-video video");
+  await expect(video).toBeVisible();
+  await expect(video).toHaveAttribute("poster", "/images/projects/hsvs-design-review-demo-poster.webp");
+  await expect(video).toHaveAttribute("preload", "metadata");
+  await expect(video).toHaveAttribute("playsinline", "");
+  await expect(video.locator("source")).toHaveAttribute("src", "/videos/hsvs-design-review-demo-4.mp4");
+  await expect.poll(() => video.evaluate((element) => (element as HTMLVideoElement).duration)).toBeGreaterThan(77);
+  expect(await video.evaluate((element) => (element as HTMLVideoElement).duration)).toBeLessThan(79);
+  expect(await video.evaluate((element) => (element as HTMLVideoElement).paused)).toBe(true);
+  expect(await video.evaluate((element) => (element as HTMLVideoElement).autoplay)).toBe(false);
+  expect(await video.evaluate((element) => (element as HTMLVideoElement).controls)).toBe(true);
+  const videoBox = await video.boundingBox();
+  expect(videoBox!.width / videoBox!.height).toBeCloseTo(16 / 9, 1);
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
     "Design Review & Client Feedback Platform",
   );
@@ -284,7 +304,8 @@ test("project thumbnails fill their cards while screenshots keep their proportio
   const thumbnails = page.locator(".workcard .project-image");
   expect(await thumbnails.count()).toBeGreaterThan(0);
   for (const thumbnail of await thumbnails.all()) {
-    await expect(thumbnail).toHaveCSS("object-fit", "cover");
+    const showFullFrame = await thumbnail.evaluate((image) => Boolean(image.closest(".video-preview, .academy")));
+    await expect(thumbnail).toHaveCSS("object-fit", showFullFrame ? "contain" : "cover");
   }
 
   await page.goto("/projects/mobile-app-marketing-lead-capture");

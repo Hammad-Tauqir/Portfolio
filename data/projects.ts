@@ -368,9 +368,10 @@ export const projects: Project[] = [
     attribution:
       "This was a team-built product. My contribution was the features described here; the original platform and its core review infrastructure were built by the team.",
     visual: "design-review",
-    image: "/images/projects/design-review-dashboard.png",
+    image: "/images/projects/hsvs-design-review-demo-poster.webp",
     imageAlt:
-      "MetaViz Studio dashboard with a project grid and design-export upload area",
+      "Frame from the HSVS Design Review demo showing the review canvas, page list, and comments panel",
+    video: "/videos/hsvs-design-review-demo-4.mp4",
     screenshots: [
       {
         src: "/images/projects/design-review-dashboard.png",
