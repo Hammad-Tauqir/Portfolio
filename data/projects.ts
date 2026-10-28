@@ -39,6 +39,7 @@ export type Project = {
   imageAlt?: string;
   imageCaption?: string;
   video?: string;
+  videoPoster?: string;
   demo: string;
   github: string;
   privateRepo?: boolean;
@@ -137,6 +138,8 @@ export const projects: Project[] = [
     ],
     visual: "academy",
     image: "/images/projects/concept-science-academy-logo.png",
+    video: "/videos/concept-science-academy-demo.mp4",
+    videoPoster: "/images/projects/concept-science-academy-demo-poster.webp",
     imageAlt:
       "Concept Science Academy logo used as the project cover",
     imageCaption: "Academy branding · staff-only application",

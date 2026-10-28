@@ -325,8 +325,28 @@ test("project thumbnails fill their cards while screenshots keep their proportio
   }
 });
 
-test("academy keeps its logo cover and shows the four supplied interface screenshots", async ({ page }) => {
-  await page.goto("/projects/concept-science-academy");
+test("academy keeps its logo cover and shows its demo and screenshots", async ({ page }) => {
+  await page.goto("/");
+  const featured = page.locator(".feature").filter({ has: page.getByRole("heading", { name: "Concept Science Academy", exact: true }) });
+  await expect(featured.getByRole("link", { name: "Watch Demo" })).toHaveAttribute("href", "/projects/concept-science-academy#demo-video");
+  await page.goto("/projects");
+  const card = page.locator(".workcard").filter({ has: page.getByRole("heading", { name: "Concept Science Academy", exact: true }) });
+  await expect(card.locator("img")).toHaveAttribute("src", /concept-science-academy-logo/);
+  await card.getByRole("link", { name: "Watch Demo" }).click();
+  await expect(page).toHaveURL(/\/projects\/concept-science-academy#demo-video$/);
+  const video = page.locator("#demo-video video");
+  await expect(video).toBeVisible();
+  await expect(video).toHaveAttribute("poster", "/images/projects/concept-science-academy-demo-poster.webp");
+  await expect(video).toHaveAttribute("preload", "metadata");
+  await expect(video).toHaveAttribute("playsinline", "");
+  await expect(video.locator("source")).toHaveAttribute("src", "/videos/concept-science-academy-demo.mp4");
+  await expect.poll(() => video.evaluate((element) => (element as HTMLVideoElement).duration)).toBeGreaterThan(65);
+  expect(await video.evaluate((element) => (element as HTMLVideoElement).duration)).toBeLessThan(67);
+  expect(await video.evaluate((element) => (element as HTMLVideoElement).paused)).toBe(true);
+  expect(await video.evaluate((element) => (element as HTMLVideoElement).autoplay)).toBe(false);
+  expect(await video.evaluate((element) => (element as HTMLVideoElement).controls)).toBe(true);
+  const videoBox = await video.boundingBox();
+  expect(videoBox!.width / videoBox!.height).toBeCloseTo(16 / 9, 1);
   await expect(page.locator(".case-visual .project-image")).toHaveAttribute(
     "alt",
     "Concept Science Academy logo used as the project cover",
@@ -409,7 +429,7 @@ test("project archive keeps cards short and links to full details", async ({
   await page.goto("/");
   await page.evaluate(() => document.fonts.ready);
   await expect(page.locator(".workcard")).toHaveCount(0);
-  await expect(page.getByRole("link", { name: "Watch Demo" })).toHaveAttribute(
+  await expect(page.locator(".feature").first().getByRole("link", { name: "Watch Demo" })).toHaveAttribute(
     "href",
     "/projects/ai-receptionist#demo-video",
   );

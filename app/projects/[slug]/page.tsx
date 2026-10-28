@@ -93,7 +93,7 @@ export default async function ProjectPage({ params }: Props) {
             controls
             playsInline
             preload="metadata"
-            poster={project.image}
+            poster={project.videoPoster || project.image}
             width={1920}
             height={1080}
           >
