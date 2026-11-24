@@ -17,7 +17,7 @@
     "@fontsource/space-grotesk": "latest",
     "framer-motion": "latest",
     "lucide-react": "latest",
-    "next": "16.4.2",
+    "next": "16.4.6",
     "nodemailer": "^10.2.1",
     "react": "latest",
     "react-dom": "latest"
