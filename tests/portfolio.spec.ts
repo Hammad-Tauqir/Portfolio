@@ -46,13 +46,13 @@ test("filters include multi-category work and unfinished projects", async ({
   page,
 }) => {
   await page.goto("/projects");
-  await expect(page.locator(".workcard")).toHaveCount(7);
+  await expect(page.locator(".workcard")).toHaveCount(8);
   await expect(page.getByText("Banking Management App")).toHaveCount(0);
   await expect(
     page.getByRole("button", { name: "Mobile", exact: true }),
   ).toHaveCount(0);
   await page.getByRole("button", { name: "Automation", exact: true }).click();
-  await expect(page.locator(".workcard")).toHaveCount(3);
+  await expect(page.locator(".workcard")).toHaveCount(4);
   await expect(page.locator(".progress-status")).toHaveCount(2);
   await page.getByRole("button", { name: "Full Stack", exact: true }).click();
   await expect(page.locator(".workcard")).toHaveCount(3);
@@ -67,7 +67,7 @@ test("filters include multi-category work and unfinished projects", async ({
   await page
     .getByRole("button", { name: "All projects", exact: true })
     .click();
-  await expect(page.locator(".workcard")).toHaveCount(7);
+  await expect(page.locator(".workcard")).toHaveCount(8);
 });
 test("navigation works across routes", async ({ page, isMobile }) => {
   await page.goto("/projects");
@@ -174,6 +174,7 @@ test("contact endpoint validates enquiries", async ({ request }) => {
 });
 test("every project and custom 404 resolve", async ({ page }) => {
   for (const slug of [
+    "ai-voice-receptionist",
     "ai-receptionist",
     "concept-science-academy",
     "polymath-kids",
@@ -433,7 +434,7 @@ test("project archive keeps cards short and links to full details", async ({
   await page.goto("/");
   await page.evaluate(() => document.fonts.ready);
   await expect(page.locator(".workcard")).toHaveCount(0);
-  await expect(page.locator(".feature").first().getByRole("link", { name: "Watch Demo" })).toHaveAttribute(
+  await expect(page.locator(".feature").filter({ has: page.getByRole("heading", { name: "AI Receptionist", exact: true }) }).getByRole("link", { name: "Watch Demo" })).toHaveAttribute(
     "href",
     "/projects/ai-receptionist#demo-video",
   );
@@ -443,7 +444,10 @@ test("project archive keeps cards short and links to full details", async ({
   }
   await navigation.getByRole("link", { name: "Projects" }).click();
   await expect(page).toHaveURL(/\/projects$/);
-  await expect(page.locator(".case-study-grid .workcard")).toHaveCount(7);
+  await expect(page.locator(".case-study-grid .workcard")).toHaveCount(8);
+  const novaCard = page
+    .locator(".case-study-grid .workcard")
+    .filter({ has: page.getByRole("heading", { name: "AI Receptionist", exact: true }) });
   if (testInfo.project.name === "desktop") {
     await expect(
       page.locator(".case-study-grid .workcard").first(),
@@ -453,16 +457,16 @@ test("project archive keeps cards short and links to full details", async ({
     path: testInfo.outputPath("case-studies-grid.png"),
     style: ".site-header, .skip-link { visibility: hidden !important; }",
   });
-  const image = page.locator(".case-study-grid img").first();
+  const image = novaCard.locator("img");
   await expect(image).toBeVisible();
   expect(
     await image.evaluate((el) => (el as HTMLImageElement).naturalWidth),
   ).toBeGreaterThan(0);
   await expect(image).toHaveAttribute("alt", /Frame from the Nova Digital AI Receptionist demo/);
-  const previewBox = await page.locator(".case-study-grid .preview").first().boundingBox();
+  const previewBox = await novaCard.locator(".preview").boundingBox();
   expect(previewBox!.width / previewBox!.height).toBeCloseTo(16 / 9, 1);
   expect(await image.evaluate((element) => getComputedStyle(element).objectFit)).toBe("contain");
-  const watchDemo = page.locator(".case-study-grid .workcard").first().getByRole("link", { name: "Watch Demo" });
+  const watchDemo = novaCard.getByRole("link", { name: "Watch Demo" });
   await expect(watchDemo).toHaveAttribute("href", "/projects/ai-receptionist#demo-video");
   await watchDemo.click();
   await expect(page).toHaveURL(/\/projects\/ai-receptionist#demo-video$/);

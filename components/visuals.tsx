@@ -1,24 +1,28 @@
+import { Fragment } from "react";
 import Image from "next/image";
 import type { Project } from "@/data/projects";
 
+const defaultFlow = [
+  { label: "TRIGGER", title: "New request" },
+  { label: "PROCESS", title: "Classify & prepare" },
+  { label: "REVIEW", title: "Human approval" },
+];
+
 /** Illustrative workflow shown for projects that have no real screenshot yet. */
-function FlowIllustration() {
+function FlowIllustration({ steps = defaultFlow }: { steps?: Project["flow"] }) {
   return (
     <div className="ui automation-ui" aria-hidden="true">
-      <div className="flow-node start">
-        <small>TRIGGER</small>
-        <strong>New request</strong>
-      </div>
-      <i />
-      <div className="flow-node">
-        <small>PROCESS</small>
-        <strong>Classify &amp; prepare</strong>
-      </div>
-      <i />
-      <div className="flow-node end">
-        <small>REVIEW</small>
-        <strong>Human approval</strong>
-      </div>
+      {steps.map((step, index) => (
+        <Fragment key={step.label}>
+          {index > 0 && <i />}
+          <div
+            className={`flow-node${index === 0 ? " start" : index === steps.length - 1 ? " end" : ""}`}
+          >
+            <small>{step.label}</small>
+            <strong>{step.title}</strong>
+          </div>
+        </Fragment>
+      ))}
     </div>
   );
 }
@@ -104,7 +108,7 @@ export function ProjectVisual({
         </>
       ) : (
         <>
-          <FlowIllustration />
+          <FlowIllustration steps={project.flow} />
           <span className="illustration-label">
             Illustrative interface preview
           </span>

@@ -197,6 +197,16 @@ export default async function ProjectPage({ params }: Props) {
                   </li>
                 ))}
               </ul>
+              {project.howItWorks && (
+                <>
+                  <h3>How it works</h3>
+                  <ol className="case-step-list">
+                    {project.howItWorks.map((step) => (
+                      <li key={step}>{step}</li>
+                    ))}
+                  </ol>
+                </>
+              )}
               {project.technicalHighlights && (
                 <>
                   <h3>Technical highlights</h3>

@@ -23,6 +23,10 @@ export type Project = {
   problem: string;
   solution: string;
   features: (string | { title: string; description: string })[];
+  /** Optional numbered "How it works" steps on the detail page. */
+  howItWorks?: string[];
+  /** Optional steps for the illustrative preview shown when there is no image. */
+  flow?: { label: string; title: string }[];
   technicalHighlights?: string[];
   outcome?: string;
   attribution?: string;
@@ -59,6 +63,66 @@ const defaults = {
   learned: "",
 };
 export const projects: Project[] = [
+  {
+    ...defaults,
+    slug: "ai-voice-receptionist",
+    name: "AI Receptionist for Plumbers & HVAC",
+    subtitle: "AI Calling Agent & Appointment Booking",
+    projectType: "AI Voice Agent · Phone Calls",
+    teaser:
+      "An AI voice agent that answers calls for plumbing businesses, collects the job details and books the appointment straight into Google Calendar.",
+    categories: ["Automation"],
+    context: "Personal project",
+    featured: true,
+    summary:
+      "An AI voice agent that answers calls for plumbing businesses, collects the job details and books the appointment straight into Google Calendar.",
+    stack: [
+      "Retell AI",
+      "n8n",
+      "Docker",
+      "Google Calendar API",
+      "Google Sheets API",
+      "Gmail API",
+      "Webhooks",
+      "Prompt Engineering",
+      "ngrok",
+    ],
+    problem:
+      "Plumbers and HVAC techs miss calls while they're on a job. A missed call usually means the customer calls the next company.",
+    solution:
+      "An AI receptionist (\"Sarah\") picks up every call, day or night. She asks what the problem is, checks the service area, takes the name, phone and address, checks free time slots and books the visit. The owner gets the lead in a Google Sheet and an email right away. Emergencies (burst pipe, flooding, sewage backup) get an URGENT email so the owner calls back first. Gas smell calls get safety instructions and are not booked.",
+    features: [
+      "Answers calls with a natural voice, 24/7",
+      "Detects emergencies from what the caller says",
+      "Checks real availability in Google Calendar and books the slot during the call",
+      "Saves every call to Google Sheets (name, phone, address, issue, urgency, appointment)",
+      "Sends an email for every lead, with an URGENT subject for emergencies",
+      "Call summary written automatically after each call",
+      "Low running cost (around $0.08 per minute of call)",
+    ],
+    howItWorks: [
+      "A customer calls the business number.",
+      "The Retell AI voice agent answers and talks with the caller.",
+      "During the call, custom functions call n8n webhooks.",
+      "n8n checks Google Calendar for free slots and books the visit.",
+      "After the call, n8n saves the lead to Google Sheets and sends a Gmail alert.",
+    ],
+    flow: [
+      { label: "INCOMING CALL", title: "Retell AI voice agent" },
+      { label: "BOOKING", title: "n8n + Google Calendar" },
+      { label: "FOLLOW-UP", title: "Sheets + Gmail alert" },
+    ],
+    visual: "automation",
+    // IMAGE: no screenshot yet, so the illustrative flow preview is shown.
+    // When ready, add a 1600×900 (16:9) image at
+    // public/images/projects/ai-voice-receptionist.png and set:
+    // image: "/images/projects/ai-voice-receptionist.png",
+    // imageAlt: "Short description of what the screenshot shows",
+    // DEMO_VIDEO_URL: replace with the demo video path to show the
+    // "Watch Demo" buttons and video player, e.g.
+    // video: "/videos/ai-voice-receptionist-demo.mp4",
+    video: "",
+  },
   {
     ...defaults,
     slug: "ai-receptionist",
