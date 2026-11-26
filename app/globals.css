@@ -1713,6 +1713,18 @@ main {
   margin-bottom: 18px;
   font-size: clamp(24px, 3vw, 34px);
 }
+.case-demo iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius);
+  background: var(--bg-2);
+}
+.case-demo-link {
+  margin-top: 12px;
+  font-size: 14px;
+}
 .case-demo video {
   display: block;
   width: 100%;
