@@ -1701,6 +1701,44 @@ main {
 .workcard:hover .compact-details svg {
   transform: translateX(4px);
 }
+/* Same thumbnail size on every card, whatever the image or video. */
+.card-media .preview,
+.card-media .preview.video-preview {
+  aspect-ratio: 16 / 9;
+}
+/* Line up card rows (thumbnail, meta, title, text, tags, links, demo
+   button) across cards in the same grid row. */
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 641px) {
+    .workgrid > .workcard {
+      display: grid;
+      grid-row: span 7;
+      grid-template-rows: subgrid;
+      row-gap: 0;
+    }
+    .workcard > .compact-project-link {
+      display: grid;
+      grid-row: span 6;
+      grid-template-rows: subgrid;
+      row-gap: 0;
+    }
+    .compact-project-link > .compact-project-body {
+      display: grid;
+      grid-row: span 5;
+      grid-template-rows: subgrid;
+      row-gap: 12px;
+    }
+    .compact-project-body > .compact-details {
+      align-self: end;
+      justify-self: start;
+    }
+    .workcard > .compact-watch-demo {
+      grid-row: 7;
+      align-self: start;
+      justify-self: start;
+    }
+  }
+}
 
 /* ==========================================================================
    Project detail

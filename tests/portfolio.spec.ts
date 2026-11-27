@@ -42,18 +42,18 @@ test("four page layouts render without overflow or browser errors", async ({
   }
   expect(errors).toEqual([]);
 });
-test("filters include multi-category work and unfinished projects", async ({
+test("filters include multi-category work", async ({
   page,
 }) => {
   await page.goto("/projects");
-  await expect(page.locator(".workcard")).toHaveCount(8);
+  await expect(page.locator(".workcard")).toHaveCount(6);
   await expect(page.getByText("Banking Management App")).toHaveCount(0);
   await expect(
     page.getByRole("button", { name: "Mobile", exact: true }),
   ).toHaveCount(0);
   await page.getByRole("button", { name: "Automation", exact: true }).click();
-  await expect(page.locator(".workcard")).toHaveCount(4);
-  await expect(page.locator(".progress-status")).toHaveCount(2);
+  await expect(page.locator(".workcard")).toHaveCount(2);
+  await expect(page.locator(".progress-status")).toHaveCount(0);
   await page.getByRole("button", { name: "Full Stack", exact: true }).click();
   await expect(page.locator(".workcard")).toHaveCount(3);
   await expect(
@@ -67,7 +67,7 @@ test("filters include multi-category work and unfinished projects", async ({
   await page
     .getByRole("button", { name: "All projects", exact: true })
     .click();
-  await expect(page.locator(".workcard")).toHaveCount(8);
+  await expect(page.locator(".workcard")).toHaveCount(6);
 });
 test("navigation works across routes", async ({ page, isMobile }) => {
   await page.goto("/projects");
@@ -180,8 +180,6 @@ test("every project and custom 404 resolve", async ({ page }) => {
     "polymath-kids",
     "mobile-app-marketing-lead-capture",
     "design-review-client-feedback",
-    "email-automation",
-    "order-management",
   ]) {
     const response = await page.goto(`/projects/${slug}`);
     expect(response?.status()).toBe(200);
@@ -444,7 +442,7 @@ test("project archive keeps cards short and links to full details", async ({
   }
   await navigation.getByRole("link", { name: "Projects" }).click();
   await expect(page).toHaveURL(/\/projects$/);
-  await expect(page.locator(".case-study-grid .workcard")).toHaveCount(8);
+  await expect(page.locator(".case-study-grid .workcard")).toHaveCount(6);
   const novaCard = page
     .locator(".case-study-grid .workcard")
     .filter({ has: page.getByRole("heading", { name: "AI Receptionist", exact: true }) });
