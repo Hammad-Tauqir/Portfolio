@@ -123,7 +123,7 @@ export const projects: Project[] = [
     // image: "/images/projects/ai-voice-receptionist.png",
     // imageAlt: "Short description of what the screenshot shows",
     // Demo video hosted on Kommodo, shown in an embedded player.
-    videoEmbed: "https://kommodo.ai/embed/recordings/ohaTC6dtFnIzEO0Tm2tm",
+    videoEmbed: "https://kommodo.ai/embed/recordings/ohaTC6dtFnIzEO0Tm2tm?onlyRecording=1",
     videoPage: "https://kommodo.ai/recordings/ohaTC6dtFnIzEO0Tm2tm",
   },
   {

@@ -92,7 +92,7 @@ export default async function ProjectPage({ params }: Props) {
             src={project.videoEmbed}
             title={`${project.name} demo video`}
             loading="lazy"
-            allow="autoplay; fullscreen; picture-in-picture"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
             allowFullScreen
           />
           {project.videoPage && (
