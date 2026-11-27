@@ -464,45 +464,4 @@ export const projects: Project[] = [
     ],
     demo: "https://mockup.metaviz.pro/",
   },
-  {
-    ...defaults,
-    slug: "email-automation",
-    name: "Smart Email Workflow",
-    categories: ["Automation"],
-    context: "Workflow in development",
-    status: "In Progress",
-    summary:
-      "An n8n workflow in development to classify incoming emails and prepare contextual draft responses for human review.",
-    stack: ["n8n", "Gmail", "AI model integration", "Workflow automation"],
-    problem: "Sorting repetitive inquiries and preparing replies takes time.",
-    solution:
-      "A proposed review-first workflow that identifies email type and prepares a contextual draft.",
-    features: [
-      "Planned: email classification",
-      "Planned: AI-assisted contextual drafting",
-      "Planned: human review before sending",
-    ],
-    visual: "automation",
-  },
-  {
-    ...defaults,
-    slug: "order-management",
-    name: "Google Sheets Order Management",
-    categories: ["Automation"],
-    context: "Workflow in development",
-    status: "In Progress",
-    summary:
-      "An automation workflow in development to capture customer orders and store and update records in Google Sheets.",
-    stack: ["n8n", "Google Sheets", "Webhooks", "Workflow automation"],
-    problem:
-      "Manually transferring customer order information into spreadsheets introduces repetitive steps.",
-    solution:
-      "A proposed webhook workflow that captures order information and creates or updates Google Sheets records.",
-    features: [
-      "Planned: webhook-based order capture",
-      "Planned: Google Sheets record creation",
-      "Planned: order record updates",
-    ],
-    visual: "automation",
-  },
 ];
