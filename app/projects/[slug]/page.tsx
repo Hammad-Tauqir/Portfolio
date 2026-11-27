@@ -85,6 +85,26 @@ export default async function ProjectPage({ params }: Props) {
           <ProjectVisual project={project} priority />
         </div>
       </section>
+      {!project.video && project.videoEmbed && (
+        <section className="wrap case-demo" id="demo-video" aria-labelledby="demo-video-title">
+          <h2 id="demo-video-title">Watch the demo</h2>
+          <iframe
+            src={project.videoEmbed}
+            title={`${project.name} demo video`}
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+            allowFullScreen
+          />
+          {project.videoPage && (
+            <p className="case-demo-link">
+              <a href={project.videoPage} target="_blank" rel="noopener noreferrer">
+                Open the video on Kommodo
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </p>
+          )}
+        </section>
+      )}
       {project.video && (
         <section className="wrap case-demo" id="demo-video" aria-labelledby="demo-video-title">
           <h2 id="demo-video-title">Watch the demo</h2>

@@ -23,7 +23,7 @@ export function ProjectLinks({ project }: { project: Project }) {
           <span className="sr-only"> (opens in a new tab)</span>
         </a>
       )}
-      {project.video && (
+      {(project.video || project.videoEmbed) && (
         <Link
           className="text-link"
           href={`/projects/${project.slug}#demo-video`}
@@ -96,7 +96,7 @@ export function ProjectCard({ project }: { project: Project }) {
           </span>
         </div>
       </Link>
-      {project.video && (
+      {(project.video || project.videoEmbed) && (
         <Link className="compact-watch-demo" href={`/projects/${project.slug}#demo-video`}>
           Watch Demo <ArrowRight size={15} aria-hidden="true" />
         </Link>
@@ -153,7 +153,7 @@ export function FeaturedProject({
           <Link className="btn ghost" href={href}>
             View case study <ArrowUpRight size={16} aria-hidden="true" />
           </Link>
-          {project.video && (
+          {(project.video || project.videoEmbed) && (
             <Link className="btn ghost" href={`${href}#demo-video`}>
               Watch Demo <ArrowRight size={16} aria-hidden="true" />
             </Link>
